@@ -1,0 +1,62 @@
+<div class="pantalla" id="pantalla"> 
+    <div class="box">
+        <form [formGroup]="formLogin" (ngSubmit)="iniciarSesion()">
+            <h2>Iniciar sesión</h2>
+            <div class="contenedor-input-error">
+                <div class="contenedor-input-imagen">
+                    <img src="../../../assets/login/email.png" alt="">
+                    <input id="email" formControlName="email" type="email" placeholder="Correo electrónico">
+                </div>
+                <small
+                class="mensaje-error"
+                *ngIf="
+                formLogin.controls['email'].errors?.['required'] &&
+                formLogin.controls['email'].touched">
+                *El correo electrónico es obligatorio
+              </small>
+              <small 
+              class="mensaje-error"
+               *ngIf="( formLogin.controls['email'].dirty ||  formLogin.controls['email'].touched) &&  
+               formLogin.controls['email'].invalid &&  formLogin.controls['email'].errors?.['pattern']">
+                *Formato incorrecto. Ejemplo, ejemplo@ejemplo.com
+              </small>
+            </div>
+            <div class="contenedor-input-error">
+                <div class="contenedor-input-imagen">
+                    <img src="../../../assets/login/clave.png" alt="">
+                    <input id="clave" formControlName="clave" type="password" placeholder="Contraseña">
+                </div>
+                <small
+                    class="mensaje-error"
+                    *ngIf="
+                    formLogin.controls['clave'].errors?.['required'] &&
+                    formLogin.controls['clave'].touched">
+                    *La contraseña es obligatoria
+                </small>      
+                <small
+                    class="mensaje-error"
+                    *ngIf="
+                    formLogin.controls['clave'].errors?.['pattern'] &&
+                    formLogin.controls['clave'].touched">
+                    *La contraseña debe tener mínimo 6 caracteres
+                </small>  
+                <h4>Accede como:</h4> 
+                <div class="accesos-rapidos">
+                    <div class="contenedor-cards">
+                        <div class="card" *ngFor="let usuario of listaUsuarios">
+                            <img class="imagen-usuario" [src]="usuario.imagen1" [alt]="usuario.perfil">
+                            <h5>{{usuario.perfil}}</h5>
+                            <h6>{{usuario.apellido}}</h6>
+                            <button type="button" (click)="ingresoRapido('usuario.perfil')" class="boton-acceso">Ingresar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div><br>
+                <p>¿No tenés cuenta? <a routerLink="../registrarse">Regístrate</a></p>
+            </div>          
+            <button type="submit">Iniciarme</button>  
+        </form>  
+    </div>
+</div>
+<app-spinner class="esconder" id="spinner"></app-spinner>

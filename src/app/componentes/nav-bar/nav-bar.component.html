@@ -1,0 +1,23 @@
+<body>
+    <nav>
+        <a routerLink="bienvenida" class="logo">
+            <img src="../../../assets/logoClinica.png" alt="">
+            <span>LucAg</span></a>
+        <ul class="navbar">
+            <li><a routerLink="bienvenida" class="activo">Inicio</a></li>
+            <li *ngIf="authService.estaLogueado && usuarioLogueado.perfil == 'admin'"><a routerLink="usuarios">Usuarios</a></li>
+        </ul>
+    
+        <div class="main" *ngIf="!authService.estaLogueado">
+            <a routerLink="../iniciar-sesion" class="usuario"><i class="ri-user-fill"></i>Iniciar sesión</a>
+            <a routerLink="../registrarse">Registrarse</a>
+            <div class="ri-menu-line" id="icono-menu" (click)="agruparMenu()"></div>
+        </div>
+        <div class="main" *ngIf="authService.estaLogueado">
+            <a  class="usuario"><i class="ri-user-fill"></i>{{usuarioLogueado.apellido}}, {{usuarioLogueado.nombre}}</a>
+            <a (click)="cerrarSesion()">Cerrar sesión</a>
+            <div class="ri-menu-line" id="icono-menu" (click)="agruparMenu()"></div>
+        </div>
+    </nav>
+</body>
+<app-spinner class="esconder" id="spinner"></app-spinner>

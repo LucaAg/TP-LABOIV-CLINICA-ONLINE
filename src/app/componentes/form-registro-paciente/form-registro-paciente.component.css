@@ -1,0 +1,245 @@
+@import url('https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC:wght@300&display=swap');
+*
+{
+  font-family: 'Alegreya Sans SC', sans-serif;   
+
+}
+
+.contenedor-input
+{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: row;
+}
+h2
+{
+    color:rgb(13, 151, 71);
+    font-weight: 600;
+}
+input
+{
+    margin: 0.313rem;
+    padding: 0.625rem;
+    width: 85%;
+
+    border: 0.125rem double black;
+    color:black;
+    border-radius: 10px;
+    background-color: #d9f1f3;
+}
+
+.input-obra
+{
+    width: 45%;
+}
+
+input::placeholder
+{
+    color:black;
+}
+
+input[type="file"]
+{
+    background-color: transparent;
+    color:black;
+    width: 80%;
+}
+
+.esconder
+{
+  display: none;
+}
+
+#file-upload-button
+{
+    background: linear-gradient(to right, #ff0000 50%, #136bcf 50%);
+    border: none;
+    color: white;
+    padding: 0.625rem 1.25rem;
+    border-radius: 1.25rem;
+    cursor: pointer;
+}
+
+.lb-especialidad
+{
+  width: 40%;
+}
+
+.input-especialidad
+{
+  width: 10%;
+}
+
+.div-especialidad
+{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  margin-left: 6.25rem;
+
+}
+
+
+
+.especialidad legend {
+    font-weight: bold;
+    margin-bottom: 0.625rem;
+    color:rgb(13, 151, 71);
+}
+
+.especialidad label {
+    display: flex;
+    align-items: center;
+    margin-right: 1.25rem;
+    margin-bottom: 0.313rem;
+}
+
+
+label
+{
+    color:black;
+}
+
+.especialidad input[type="radio"] {
+    margin-right: 0.313rem;
+}
+
+.box {
+
+    width: 70%;
+    height: 90%;
+    background: rgba(112, 112, 155, 0.2);
+    margin: 0 auto;
+    margin-top: 2%;
+    padding: 2%;
+    color: rgba(252, 255, 253, 0.527);
+    font-weight: bold;
+    text-align: center;
+    border-radius: 0.938rem;
+    border-color: #009aa5;
+    border-style: double;
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+  }
+
+  .contenedor-img
+  {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 0.313rem;
+    width: 100%;
+  }
+
+  .mensaje-error
+  {
+    color:red;
+    font-style: italic;
+    font-weight: bold;
+    letter-spacing: 0.031rem;
+  }
+
+  .contenedor-input-error
+  {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  button
+  {
+    background: linear-gradient(to right, #ff0000 50%, #136bcf 50%);
+    border: none;
+    color: white;
+    padding: 0.625rem 1.25rem;
+    border-radius: 1.25rem;
+    cursor: pointer;
+    
+  }
+
+  p
+  {
+    color:rgb(13, 151, 71);
+  }
+
+  .especialidad-pop-up
+  {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(151, 219, 231, 0.5);
+    align-content: center;
+    text-align: center;
+    border: 0.188rem solid black;
+    border-radius: 0.625rem;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+    height: 50%;
+    width: 45%;
+    color: rgb(13, 151, 71);
+    backdrop-filter: blur(0.625rem);
+  }
+
+  .botones-pop-up
+  {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-top: 1.25rem;
+  }
+
+  
+  .esconder
+  {
+  display: none;
+  }
+  
+  @media only screen and (max-width: 576px) {
+    .contenedor-input {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+   
+    
+    input{
+        width: 40%;
+    }
+ 
+
+  }
+  
+  /* Media queries para pantallas medianas */
+  
+  @media only screen and (min-width: 577px) and (max-width: 992px) {
+    .contenedor-input {
+      flex-wrap: wrap;
+      justify-content: flex-start;
+    }
+    
+
+   
+    input{
+        width: 60%;
+    }
+ 
+    
+  
+    .box {
+      width: 60%;
+    }
+
+  }
+  
+  

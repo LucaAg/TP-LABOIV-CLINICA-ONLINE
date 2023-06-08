@@ -1,0 +1,178 @@
+@import url('https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC:wght@300&display=swap');
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style: none;
+    font-family: 'Alegreya Sans SC', sans-serif;   
+}
+
+
+body
+{
+    margin: 0;
+    padding: 0;
+}
+
+nav
+{
+    background-color: #363636;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+    padding: 10px 12%;
+    transition: all .50s ease;
+}
+
+.logo
+{
+    display: flex;
+    align-items: center;
+}
+
+.logo img{
+    width: 35px;
+    margin-right: 3px;
+}
+
+.logo span
+{
+    color: #fff;
+    font-size: 1.7rem;
+    font-weight: 600;
+}
+
+.navbar
+{
+    display: flex;
+}
+
+.navbar a
+{
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 500;
+    padding: 5px 0;
+    margin: 5px 0px;
+    margin: 0px 30px;
+    transition: all .50s ease;
+}
+
+.navbar a:hover
+{
+    color: #03e5f5;
+}
+
+.navbar a:active
+{
+    color:#03e5f5;
+}
+
+.main
+{
+    display: flex;
+    align-items: center;
+}
+
+.main a
+{
+    margin-right: 25px;
+    margin-left: 10px;
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 500;
+    transition: all .50s ease;
+}
+
+.usuario
+{
+    display: flex;
+    align-items: center;
+}
+
+.usuario i
+{
+    color: #03e5f5;
+    font-size: 28px;
+    margin-right: 7px;
+}
+
+.main a:hover
+{
+    color: #03e5f5;
+}
+
+#icono-menu
+{
+    font-size: 35px;
+    color: #fff;
+    cursor: pointer;
+    z-index: 10001;
+    display: none;
+}
+
+@media (max-width: 1280px)
+{
+    header{
+        padding: 14px 2%;
+        transition: .2s;
+    }
+    .navbar a
+    {
+        padding: 5px 0;
+        margin: 0px 20px;
+    }
+}
+.esconder
+{
+    display: none;
+}
+
+@media (max-width: 1090px)
+{
+    #icono-menu
+    {
+        display: block;
+    }
+    .navbar{
+        position: absolute;
+        top: 100%;
+        right: -100%;
+        width: 270px;
+        height: 29vh;
+        background: #026269;   
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        border-radius: 10px;
+        transition: all .50s ease;
+    }
+    .navbar a
+    {
+        display: block;
+        margin: 12px 0;
+        padding: 0px 25px;
+        transition: all .50s ease;
+    }
+    .navbar a:hover
+    {
+        color: #fff;
+        transform: translateY(5px);
+    }
+    .navbar a.activo
+    {
+        color: #fff;
+    }
+    .navbar.open
+    {
+        right: 2%;
+    }
+}

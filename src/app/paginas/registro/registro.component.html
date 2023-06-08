@@ -1,0 +1,27 @@
+<div class="pantalla-general" >
+    <div *ngIf="seccion == 'menu'" class="pantalla-1">
+        <h1>¿A quién va a registrar?</h1>
+        <div class="contenedor-box">
+            <section class="box" (click)="cambiarSeccion('especialista')">
+                <h2>Especialista</h2><br>
+                <img src="../../../assets/registro/especialista.png" alt="">
+            </section>
+            <section class="box" (click)="cambiarSeccion('paciente')">
+                <h2>Paciente</h2><br>
+                <img src="../../../assets/registro/paciente.png" alt="">
+            </section>
+        </div>
+        
+    </div>
+    <div class="pantalla-2" *ngIf="seccion == 'seleccion'">
+        <div class="contenedor-registros" *ngIf="usuarioARegistrar == 'especialista'">
+           <app-form-registro></app-form-registro>
+        </div>
+        <div class="contenedor-registros" *ngIf="usuarioARegistrar == 'paciente'">
+            <app-form-registro-paciente></app-form-registro-paciente>
+        </div>
+        <div class="boton-menu">
+            <button (click)="volverMenuSeleccion()"><img class="flecha" src="../../../assets/registro/flecha-hacia-atras.png" alt="flecha hacia atrás">Volver</button>
+        </div>
+    </div>
+</div>

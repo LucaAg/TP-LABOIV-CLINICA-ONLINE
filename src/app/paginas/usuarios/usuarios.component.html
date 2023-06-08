@@ -1,0 +1,52 @@
+<div class="pantalla" id="pantalla">
+    <div id="box" class="box">
+        <div class="tabla">
+            <div class="encabezado-tabla">
+                <img style="width:60px;" src="../../../assets/logoClinica.png" alt="">
+                <h3>Usuarios</h3>
+                <div class="botonera">
+                    <button (click)="generarExcel()" class="agregar-usuario">Generar Excel</button>
+                    <button (click)="abrirPopUp()" class="agregar-usuario">Registrar usuario</button>
+                </div>
+            </div>
+            <div class="seccion-tabla">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Imagen</th>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Perfil</th>
+                            <th>Habilitar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let usuario of listaUsuarios">
+                            <td><img loading="lazy" [src]=usuario.imagen1 alt="Imagen usuario"></td>
+                            <td>{{usuario.nombre}}</td>
+                            <td>{{usuario.apellido}}</td>
+                            <td>{{usuario.perfil}}</td>
+                            <td><input *ngIf="usuario.perfil == 'especialista'" type="checkbox" 
+                                (click)="cambiarEstadoHabilitacion(usuario,$event)" [(ngModel)]="usuario.aprobado"></td>
+                        </tr>
+                    
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div id="contenedor-pop-up" class="esconder admin-pop-up">
+        <div class="contenedor-imagen-popup">
+            <img class="imagen-cancelar" src="../../../assets/usuarios/cancelar.png" (click)="cerrarPopUp()" alt="Boton cancelar">
+        </div>
+          <h4>¿Qué usuario desea agregar?</h4>
+          <div class="botones-pop-up">
+            <button class="boton-pop-up" (click)="registrarUsuario('admin')" type="button">Admin</button>
+            <button class="boton-pop-up" (click)="registrarUsuario('otros')" type="button">Especialista/Paciente</button>
+          </div>
+      </div>
+      <div id="registro" class="esconder form-registro">
+        <app-form-registro-admin (registroCompletado)="registroAdminCompletado()"></app-form-registro-admin>
+      </div>
+</div>
+<app-spinner class="esconder" id="spinner"></app-spinner>

@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "simulacrolaboiv": {
+      "hosting": {
+        "ClinicaOnline": [
+          "agnoliluca-tp2-clinicaonline"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "simulacrolaboiv"
+  }
+}
