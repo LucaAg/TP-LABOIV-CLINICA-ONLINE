@@ -40,23 +40,20 @@
                     formLogin.controls['clave'].touched">
                     *La contraseña debe tener mínimo 6 caracteres
                 </small>  
-                <h4>Accede como:</h4> 
-                <div class="accesos-rapidos">
-                    <div class="contenedor-cards">
-                        <div class="card" *ngFor="let usuario of listaUsuarios">
-                            <img class="imagen-usuario" [src]="usuario.imagen1" [alt]="usuario.perfil">
-                            <h5>{{usuario.perfil}}</h5>
-                            <h6>{{usuario.apellido}}</h6>
-                            <button type="button" (click)="ingresoRapido('usuario.perfil')" class="boton-acceso">Ingresar</button>
-                        </div>
-                    </div>
-                </div>
             </div>
             <div><br>
                 <p>¿No tenés cuenta? <a routerLink="../registrarse">Regístrate</a></p>
             </div>          
             <button type="submit">Iniciarme</button>  
         </form>  
+    </div>
+    <div class="accesos-rapidos box">
+        <h4>Accede como:</h4> 
+        <div *ngFor="let usuario of listaUsuarios">
+            <button  (click)="ingresoRapido(usuario)" class="boton-acceso">
+                <img class="imagen-usuario"  [src]="usuario.imagen1" [alt]="usuario.perfil">
+            </button>
+        </div>
     </div>
 </div>
 <app-spinner class="esconder" id="spinner"></app-spinner>

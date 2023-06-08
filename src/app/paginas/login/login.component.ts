@@ -217,22 +217,10 @@ export class LoginComponent {
     });
   }
 
-  ingresoRapido(tipoUsuario:string)
+  ingresoRapido(usuario:any)
   {
-    switch(tipoUsuario)
-    {
-      case 'admin':
-        this.formLogin.get('email')?.setValue('nahuquilmes01@hotmail.com');
-        this.formLogin.get('clave')?.setValue(123456);
-        break;
-      case 'paciente':
-        this.formLogin.get('email')?.setValue('nahuquilmes@hotmail.com');
-        this.formLogin.get('clave')?.setValue(123456);
-        break;
-      case 'especialista':
-        this.formLogin.get('email')?.setValue('lucanahuelagnoli@gmail.com');
-        this.formLogin.get('clave')?.setValue(123456);
-        break;    
-    }
+
+    this.formLogin.get('email')?.setValue(usuario.email);
+    this.formLogin.get('clave')?.setValue(usuario.clave);  
   }
 }
