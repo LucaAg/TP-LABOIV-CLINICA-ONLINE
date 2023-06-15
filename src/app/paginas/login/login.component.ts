@@ -22,6 +22,9 @@ export class LoginComponent {
   spinner:any;
   pantalla:any;
   listaUsuarios:any[]=[];
+  contadorAdmin=0;
+  contadorEspecialistas = 0;
+  contadorPacientes = 0;
   constructor(private formBuilder:FormBuilder,
     private auth:AuthService,
     private router: Router,
@@ -33,10 +36,29 @@ export class LoginComponent {
       clave: ['', [Validators.required,Validators.pattern(this.patternContraseña)]],
     });
   }
+
   cargarUsuarios()
   {
     this.firebaseServi.obtenerUsuarios().subscribe((res)=>{
-      this.listaUsuarios = res;
+      res.forEach(usuario => {
+      
+        if(usuario.perfil == "admin" && this.contadorAdmin == 0)
+        {
+          this.listaUsuarios.push(usuario);
+          this.contadorAdmin++;
+        }
+        else if(usuario.perfil == "especialista" && this.contadorEspecialistas < 2)
+        {
+          this.listaUsuarios.push(usuario);
+          this.contadorEspecialistas++;
+        }
+        else if(usuario.perfil == "paciente" && this.contadorEspecialistas < 3)
+        {
+          this.listaUsuarios.push(usuario);
+          this.contadorPacientes++;
+        }
+     });  
+      console.log(this.listaUsuarios);
     });
   }
 
@@ -131,84 +153,6 @@ export class LoginComponent {
     return usuarioVerificado;
   }
 
-  // iniciarSesion()
-  // {
-  //   if(this.formLogin.valid)
-  //   {
-  //     let verificacion = "";
-  //     this.email = this.formLogin.getRawValue().email;
-  //     this.contraseña = this.formLogin.getRawValue().clave;
-  //     this.auth.iniciarSesion(this.email,this.contraseña).then(async()=>{
-  //       this.obtenerDatosUsuario();
-  //       setTimeout(()=>{
-  //         verificacion = this.verificarUsuario(usuario)
-  //       },2500);
-  //     });    
-  //     this.activarSpinner();
-  //     setTimeout(()=>{
-  //       if(verificacion != 'verificado')
-  //       {
-  //         this.auth.cerrarSesion();
-  //         this.sweetServ.mensajeError(verificacion,"Iniciar sesión");
-  //       }
-  //       else
-  //       {
-  //         this.sweetServ.mensajeExitoso('Usuario '+verificacion,"Iniciar sesión");
-  //         this.router.navigate(['bienvenida']);
-  //       }
-  //     },2500);
-  //   }  
-  // }
-
-  // verificarUsuario(usuario:any)
-  // {
-  //   let usuarioVerificado = "El usuario no pertenece a un perfil existente";
-
-  //   switch(usuario.perfil)
-  //   {
-  //     case 'especialista':
-  //       if(usuario.aprobado)
-  //       {     
-  //         if(this.auth.verificarUsuario())
-  //         {
-  //           usuarioVerificado = "verificado";
-  //         }
-  //         else
-  //         {
-  //           usuarioVerificado = "Falta verificar su correo electrónico.";
-  //         }
-  //       }
-  //       else
-  //       {
-  //         usuarioVerificado = "Usuario no aprobado";
-  //       }
-  //       break;
-  //     case 'paciente':
-  //       if(this.auth.verificarUsuario())
-  //         {
-  //           usuarioVerificado = "verificado";
-  //         }
-  //         else
-  //         {
-  //           usuarioVerificado = "Falta verificar su correo electrónico.";
-  //         }
-  //       break;
-  //       default:
-  //         usuarioVerificado = "verificado";
-  //       break;    
-  //   }
-  //   return usuarioVerificado;
-  // }
-
-  // async obtenerDatosUsuario()
-  // {
-  //   this.auth.obtenerUsuarioIniciado().subscribe((usuario: any) => {
-  //     if(usuario)
-  //     {
-  //       usuario = usuario;
-  //     }
-  //   });
-  // }
   async obtenerDatosUsuario() {
     return new Promise<any>((resolve, reject) => {
       this.auth.obtenerUsuarioIniciado().subscribe((user) => {
