@@ -6,6 +6,8 @@
         <ul class="navbar">
             <li><a routerLink="bienvenida" class="activo">Inicio</a></li>
             <li *ngIf="authService.estaLogueado && usuarioLogueado.perfil == 'admin'"><a routerLink="usuarios">Usuarios</a></li>
+            <li><a routerLink="turnos" >Turnos</a></li>
+            <li><a routerLink="solicitar-turno" >Solicitar turno</a></li>
         </ul>
     
         <div class="main" *ngIf="!authService.estaLogueado">

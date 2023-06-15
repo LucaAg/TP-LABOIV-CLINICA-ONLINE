@@ -4,6 +4,8 @@ import { BienvenidaComponent } from './paginas/bienvenida/bienvenida.component';
 import { RegistroComponent } from './paginas/registro/registro.component';
 import { LoginComponent } from './paginas/login/login.component';
 import { UsuariosComponent } from './paginas/usuarios/usuarios.component';
+import { TurnosComponent } from './paginas/turnos/turnos.component';
+import { SolicitarTurnoComponent } from './paginas/solicitar-turno/solicitar-turno.component';
 
 const routes: Routes = [
   {path: "", redirectTo: '/bienvenida', pathMatch: 'full'},
@@ -11,6 +13,8 @@ const routes: Routes = [
   {path:'registrarse',component:RegistroComponent},
   {path:'iniciar-sesion',component:LoginComponent},
   {path:'usuarios',component:UsuariosComponent},
+  {path:'turnos',component:TurnosComponent},
+  {path:'solicitar-turno',component:SolicitarTurnoComponent},
 ];
 
 @NgModule({

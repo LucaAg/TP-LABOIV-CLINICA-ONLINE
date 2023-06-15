@@ -50,7 +50,9 @@
     <div class="accesos-rapidos box">
         <h4>Accede como:</h4> 
         <div *ngFor="let usuario of listaUsuarios">
-            <button  (click)="ingresoRapido(usuario)" class="boton-acceso">
+            <button  (click)="ingresoRapido(usuario)" class="boton-acceso"
+            [popover]="'Nombre: ' + usuario.nombre + ' - Perfil: ' + usuario.perfil"
+            triggers="mouseenter:mouseleave">
                 <img class="imagen-usuario"  [src]="usuario.imagen1" [alt]="usuario.perfil">
             </button>
         </div>

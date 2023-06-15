@@ -21,7 +21,9 @@ import { SpinnerComponent } from './componentes/spinner/spinner.component';
 import { FormRegistroPacienteComponent } from './componentes/form-registro-paciente/form-registro-paciente.component';
 import { UsuariosComponent } from './paginas/usuarios/usuarios.component';
 import { FormRegistroAdminComponent } from './componentes/form-registro-admin/form-registro-admin.component';
-
+import { PopoverModule } from 'ngx-bootstrap/popover';
+import { TurnosComponent } from './paginas/turnos/turnos.component';
+import { SolicitarTurnoComponent } from './paginas/solicitar-turno/solicitar-turno.component';
 
 @NgModule({
   declarations: [
@@ -34,13 +36,16 @@ import { FormRegistroAdminComponent } from './componentes/form-registro-admin/fo
     SpinnerComponent,
     FormRegistroPacienteComponent,
     UsuariosComponent,
-    FormRegistroAdminComponent
+    FormRegistroAdminComponent,
+    TurnosComponent,
+    SolicitarTurnoComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    PopoverModule.forRoot(),
     ReactiveFormsModule,
     AngularFirestoreModule,
     AngularFireAuthModule,
