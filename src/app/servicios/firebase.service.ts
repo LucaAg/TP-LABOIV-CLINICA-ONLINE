@@ -19,6 +19,12 @@ export class FirebaseService {
     return coleccion.valueChanges();
   }
 
+  obtenerEspecialistas()
+  {
+    return this.angularFirestore.collection<any>('usuarios', ref => ref.where('perfil', '==', 'especialista')
+    .where('aprobado', '==', true)).valueChanges();  
+  }
+
   async agregarDocumento(nombreColeccion:string,datos:any)
   {
     return this.angularFirestore.collection(nombreColeccion).add(datos);

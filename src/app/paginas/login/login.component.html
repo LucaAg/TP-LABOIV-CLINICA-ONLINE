@@ -1,4 +1,4 @@
-<div class="pantalla" id="pantalla"> 
+<div class="pantalla" id="pantalla" > 
     <div class="box">
         <form [formGroup]="formLogin" (ngSubmit)="iniciarSesion()">
             <h2>Iniciar sesión</h2>
@@ -58,4 +58,7 @@
         </div>
     </div>
 </div>
-<app-spinner class="esconder" id="spinner"></app-spinner>
+<div class="contenedor-spinner" *ngIf="spinner">
+    <app-spinner id="spinner"></app-spinner>
+</div>
+

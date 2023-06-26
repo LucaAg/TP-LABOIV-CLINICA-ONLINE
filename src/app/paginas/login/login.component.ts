@@ -19,9 +19,9 @@ export class LoginComponent {
   usuarioALoguear:any;
   inputEmail:any;
   inputClave:any;
-  spinner:any;
+  spinner:boolean = false;
   pantalla:any;
-  listaUsuarios:any[]=[];
+  listaUsuarios:any = new Array();
   contadorAdmin=0;
   contadorEspecialistas = 0;
   contadorPacientes = 0;
@@ -35,66 +35,69 @@ export class LoginComponent {
       email: ['', [Validators.required,Validators.pattern(this.emailPattern)]],
       clave: ['', [Validators.required,Validators.pattern(this.patternContraseña)]],
     });
+    this.inputEmail = document.getElementById('email');
+    this.inputClave = document.getElementById('clave');
+    this.cargarUsuarios();
+    
+    this.activarSpinner();
+
   }
 
+  limpiarUsuarios()
+  {
+    this.listaUsuarios = new Array();
+    this.contadorAdmin = 0;
+    this.contadorEspecialistas = 0;
+    this.contadorPacientes = 0;
+  }
   cargarUsuarios()
   {
     this.firebaseServi.obtenerUsuarios().subscribe((res)=>{
-      res.forEach(usuario => {
+      console.log(res);
       
-        if(usuario.perfil == "admin" && this.contadorAdmin == 0)
-        {
-          this.listaUsuarios.push(usuario);
-          this.contadorAdmin++;
-        }
-        else if(usuario.perfil == "especialista" && this.contadorEspecialistas < 2)
-        {
-          this.listaUsuarios.push(usuario);
-          this.contadorEspecialistas++;
-        }
-        else if(usuario.perfil == "paciente" && this.contadorEspecialistas < 3)
-        {
-          this.listaUsuarios.push(usuario);
-          this.contadorPacientes++;
-        }
+      res.forEach(usuario => {
+     if(this.listaUsuarios.find((u:any) => u.id === usuario.id) === undefined)
+     {
+       if(usuario.perfil == "admin" && this.contadorAdmin == 0)
+       {
+         this.listaUsuarios.push(usuario);
+         this.contadorAdmin++;
+       }
+       else if(usuario.perfil == "especialista" && this.contadorEspecialistas < 2)
+       {
+         this.listaUsuarios.push(usuario);
+         this.contadorEspecialistas++;
+       }
+       else if(usuario.perfil == "paciente" && this.contadorEspecialistas < 3)
+       {
+         this.listaUsuarios.push(usuario);
+         this.contadorPacientes++;
+       }
+      
+     }
      });  
       console.log(this.listaUsuarios);
     });
   }
-
-  ngAfterViewInit()
-  {
-    this.inputEmail = document.getElementById('email');
-    this.inputClave = document.getElementById('clave');
-    this.spinner = document.getElementById('spinner');
-    this.pantalla = document.getElementById('pantalla');
-    this.cargarUsuarios();
-    this.activarSpinner();
-  }
-
   
 
   activarSpinner()
   {
-    this.spinner.classList.remove('esconder');
-    this.pantalla.classList.add('esconder');
+    this.spinner = true;
     setTimeout(()=>{
-      this.spinner.classList.add('esconder');
-      this.pantalla.classList.remove('esconder');
+      this.spinner = false;
     },3000);
   }
 
-   iniciarSesion() {
+   async iniciarSesion() {
     if (this.formLogin.valid) {
       this.email = this.formLogin.getRawValue().email;
       this.contraseña = this.formLogin.getRawValue().clave;
       this.activarSpinner();
       let verificacion:string = "";
       try {
-        this.auth.iniciarSesion(this.email, this.contraseña).then(async(datos:any)=>{
-          setTimeout(()=>{          
-          },3500);
-        this.obtenerDatosUsuario().then((usuario)=>{
+        await this.auth.iniciarSesion(this.email, this.contraseña).then(async(datos:any)=>{
+        await this.obtenerDatosUsuario().then((usuario)=>{
           verificacion = this.verificarUsuario(datos,usuario);
             if (verificacion != "verificado") {
               this.auth.cerrarSesion();
@@ -104,7 +107,7 @@ export class LoginComponent {
               this.sweetServ.mensajeExitoso(verificacion, "Iniciar sesión");
               this.router.navigate(['bienvenida']);
             }          
-        })
+        });
         });       
         } catch (error) {
         console.log(error);

@@ -8,6 +8,7 @@
             <li *ngIf="authService.estaLogueado && usuarioLogueado.perfil == 'admin'"><a routerLink="usuarios">Usuarios</a></li>
             <li><a routerLink="turnos" >Turnos</a></li>
             <li><a routerLink="solicitar-turno" >Solicitar turno</a></li>
+            <li><a routerLink="mi-perfil" >Mi perfil</a></li>
         </ul>
     
         <div class="main" *ngIf="!authService.estaLogueado">

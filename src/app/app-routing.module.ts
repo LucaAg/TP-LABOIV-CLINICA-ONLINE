@@ -6,6 +6,7 @@ import { LoginComponent } from './paginas/login/login.component';
 import { UsuariosComponent } from './paginas/usuarios/usuarios.component';
 import { TurnosComponent } from './paginas/turnos/turnos.component';
 import { SolicitarTurnoComponent } from './paginas/solicitar-turno/solicitar-turno.component';
+import { MiPerfilComponent } from './paginas/mi-perfil/mi-perfil.component';
 
 const routes: Routes = [
   {path: "", redirectTo: '/bienvenida', pathMatch: 'full'},
@@ -15,6 +16,8 @@ const routes: Routes = [
   {path:'usuarios',component:UsuariosComponent},
   {path:'turnos',component:TurnosComponent},
   {path:'solicitar-turno',component:SolicitarTurnoComponent},
+  {path:'mi-perfil',component:MiPerfilComponent},
+
 ];
 
 @NgModule({

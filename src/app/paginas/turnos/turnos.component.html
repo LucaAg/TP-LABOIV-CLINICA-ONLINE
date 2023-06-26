@@ -6,8 +6,15 @@
                 <h3>Turnos</h3>
                 <div class="botonera">
                     <label>Filtrar por:</label>
-                    <input type="text" placeholder="¿Qué desea buscar?">
+                    <button (click)="especialidad =true; especialista=false">Especialista</button>
+                    <button (click)="especialista =true; especialidad =false">Especialidad</button>
                 </div>
+            </div>
+            <div class="botonera-filtrada" *ngIf="especialidad">
+                <!-- Agregar botones dinámicamente -->
+            </div>
+            <div class="botonera-filtrada" *ngIf="especialista">
+                <!-- Agregar botones dinámicamente -->
             </div>
             <div class="seccion-tabla">
                 <table>
@@ -19,7 +26,8 @@
                             <th>Especialista</th>
                             <th>Obra Social</th>
                             <th>Estado</th>
-                            <th>Cancelar turno</th>
+                            <th>Acción</th>
+                            <th>Encuesta</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -31,6 +39,7 @@
                           <td>e</td>
                           <td>f</td>
                           <td>g</td>
+                          <td>h</td>
                         </tr>
                     
                     </tbody>
@@ -38,4 +47,7 @@
             </div>
         </div>
     </div>
+</div>
+<div class="contenedor-spinner" *ngIf="spinner">
+    <app-spinner id="spinner"></app-spinner>
 </div>

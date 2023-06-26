@@ -22,12 +22,12 @@ export class AuthService {
     private sweetServi:SweetService) { }
 
   async iniciarSesion(email:string,contraseña:string) {
-    try {
-      return await this.angularFireAuth
-        .signInWithEmailAndPassword(email, contraseña)
-    } catch (error) {
-      return null;
-    }
+    return new Promise((resolve, rejected) => {
+      this.angularFireAuth.signInWithEmailAndPassword(email, contraseña).then(async usuario => {
+        resolve(usuario);
+      })
+        .catch(error => rejected(error));
+    });
   } 
 
   setLogueado()

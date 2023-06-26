@@ -5,6 +5,7 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { Especialista } from 'src/app/models/especialista';
 import { AuthService } from 'src/app/servicios/auth.service';
 import { doc } from 'firebase/firestore';
+import { SweetService } from 'src/app/servicios/sweet.service';
 @Component({
   selector: 'app-form-registro',
   templateUrl: './form-registro.component.html',
@@ -13,21 +14,25 @@ import { doc } from 'firebase/firestore';
 export class FormRegistroComponent {
   nuevoEspecialista = new Especialista();
   agregoImagen = false;
+  errorAgregarEspecialidadImagen:boolean = true;
+  errorAgregarEspecialidad:boolean = true;
   formEspecialista: FormGroup;
   formAgregarEspecialista: FormGroup;
   especialidades:string[]=[];
+  rutaImagen: string = "";
+  archivo: string = "";
   patterDNI:string="[0-9]{8}";
   patternContraseña:string=".{6,}";
   agregarEspecialidadRef:any;
-  nuevaEspecialidad = { especialidad: ""}
+  nuevaEspecialidad = { especialidad: "", imagen: ""}
   lbEspecialidades:any;
-  spinner:any;
+  spinner:boolean = false;
   box:any;
   emailPattern: any = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
   constructor(private formBuilder:FormBuilder,private formBuilder2:FormBuilder,
     private servicioFire:FirebaseService,private angularFireStorage: AngularFireStorage,
-    private auth:AuthService)
+    private auth:AuthService,private sweetServ:SweetService)
   {
     this.formEspecialista = this.formBuilder.group({
       nombre: ['', [Validators.required]],
@@ -41,7 +46,9 @@ export class FormRegistroComponent {
     });
     this.formAgregarEspecialista = this.formBuilder2.group({
       nuevaEspecialidad: ['', [Validators.required]],
-    })
+      imagenNuevaEspecialidad: ['', [Validators.required]],
+    });
+    this.activarSpinner();
   }
 
   ngOnInit()
@@ -51,19 +58,16 @@ export class FormRegistroComponent {
 
   activarSpinner()
   {
-    this.spinner.classList.remove('esconder');
-    this.box.classList.add('esconder');
+    this.spinner = true;
     setTimeout(()=>{
-      this.spinner.classList.add('esconder');
-      this.box.classList.remove('esconder');
+      this.spinner = false;
     },3000);
   }
 
   ngAfterViewInit()
   {
-    this.spinner = document.getElementById('spinner');
+   
     this.box = document.getElementById('box');
-    this.activarSpinner();
     this.agregarEspecialidadRef = document.getElementById('contenedor-pop-up');
     setTimeout(()=>{
       this.lbEspecialidades = document.getElementById('lb-especialidades');
@@ -78,10 +82,11 @@ export class FormRegistroComponent {
     }
   }
 
-  registrarEspecialista()
+  async registrarEspecialista()
   {
     if(this.formEspecialista.valid)
     {
+      await this.subirImagen(1);
       if(this.nuevoEspecialista.imagen1 != '')
       {
         this.agregoImagen = true;
@@ -93,25 +98,52 @@ export class FormRegistroComponent {
         this.nuevoEspecialista.clave = this.formEspecialista.getRawValue().clave;
         this.nuevoEspecialista.perfil = "especialista";
         this.nuevoEspecialista.especialidad = this.obtenerEspecialidadesUsuario();
+        this.nuevaEspecialidad.especialidad = this.formAgregarEspecialista.getRawValue().nuevaEspecialidad;
+        
         this.auth.registrarEspecialista(this.nuevoEspecialista);
         this.activarSpinner();
         setTimeout(()=>{
           this.formEspecialista.reset();
           this.nuevoEspecialista = new Especialista();
         },2000); 
+        this.sweetServ.mensajeExitoso("Especialista registrado exitosamente!","Especialista");
       }
+      else
+      {
+        console.log("error imagen");
+      }
+
+    }
+    else
+    {
+      console.log("error");
     }
   }
 
-  async cargarImagen($event: any) {
-    const archivo = $event.target.files[0];
-    const ruta = 'img ' + Date.now() + Math.random() * 10;
-    const referencia = this.angularFireStorage.ref(ruta);
-    await referencia.put(archivo).then(async () => {
-      referencia.getDownloadURL().subscribe((urlImg) => {
-        this.nuevoEspecialista.imagen1 = urlImg;
+  cargarImagen($event: any) {
+    this.archivo = $event.target.files[0];
+    this.rutaImagen = 'img ' + Date.now() + Math.random() * 10;
+  }
+
+  async subirImagen(tipo:number)
+  {
+    return new Promise(async (resolve,rejected)=>{
+      const referencia = this.angularFireStorage.ref(this.rutaImagen);
+      await referencia.put(this.archivo).then(async () => {
+        referencia.getDownloadURL().subscribe((urlImg) => {
+          if(tipo == 1)
+          {
+            this.nuevoEspecialista.imagen1 = urlImg;
+            resolve(urlImg);
+          }
+          if(tipo==2)
+          {
+            this.nuevaEspecialidad.imagen = urlImg;
+            resolve(urlImg);
+          }
+        });
       });
-    });
+    })
   }
 
   obtenerEspecialidadesUsuario()
@@ -147,6 +179,7 @@ export class FormRegistroComponent {
 
   async agregarEspecialidad()
   {
+    console.log(this.formAgregarEspecialista.getRawValue().imagenNuevaEspecialidad);
     if(this.formAgregarEspecialista.valid)
     {
       this.vaciarArray();
@@ -155,12 +188,21 @@ export class FormRegistroComponent {
       this.nuevaEspecialidad.especialidad = this.formAgregarEspecialista.getRawValue().nuevaEspecialidad;
       if(!this.especialidades.includes(this.nuevaEspecialidad.especialidad))
       {
+        this.errorAgregarEspecialidadImagen = true;
+        this. errorAgregarEspecialidad = true;
+        await this.subirImagen(2);
         await this.servicioFire.agregarDocumento('especialidades',this.nuevaEspecialidad);
+        this.sweetServ.mensajeExitoso("Especialidad agregada correctamente","Especialidad");
         this.cerrarPopUp();       
         this.formAgregarEspecialista.reset();
       }
     }
+    else
+    {
+      console.log("error");
+    }
   }
+
 
   abrirPopUp()
   {

@@ -1,0 +1,131 @@
+@import url('https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC:wght@300&display=swap');*
+
+*
+{
+    padding: 0;
+    margin: 0;
+    font-family: 'Alegreya Sans SC', sans-serif;   
+}
+
+.pantalla
+{
+    background-image: url('../../../assets/registro/fondo.jpg');
+    background-repeat: no-repeat;
+    background-size: 100% 100vh;
+    background-attachment: fixed;
+    background-position: center;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+
+.box {
+
+    width: 40%;
+    height: 60%;
+    background: rgba(220, 220, 221, 0.2);
+    margin: 0 auto;
+    margin-right: 0.625rem; /* Agrega un margen derecho */
+    margin-left: 0.625rem;
+    margin-top: 2%;
+    padding: 2%;
+    color: rgba(252, 255, 253, 0.527);
+    text-align: center;
+    border-radius: 0.938rem;
+    border-color: #009aa5;
+    border-style: double;
+    
+  }
+
+  .contenedor-botones {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .fila-botones {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 1rem; /* Espacio entre filas */
+  }
+  
+  .botonera
+  {
+    width: 50%;
+    height: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    padding: 10px;
+  }
+
+  .boton-especialista
+  {
+    width: 22vh;
+    height: 22vh;
+    padding: 0;
+    margin: 0 10px; /* Espacio entre botones */
+    border: none;
+    background: rgb(191, 235, 243);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+  }
+
+  .boton-especialista img
+  {
+    width: 22vh;
+    height: 22vh;
+  }
+
+.contenedor-especialidades div div button 
+{
+  width: 68vh;
+  height: 22.6vh;
+  background-image: url(../../../assets/pedirTurnos/triangulo.png);
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  border-color: transparent;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Aplica una rotación de 45 grados al botón */
+}
+
+.contenedor-especialidades
+{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.contenedor-especialidades div div button img
+{
+  margin-top:4.5vh;
+  position: absolute;
+  width: 7vh;
+  height: 7vh;
+}
+
+/* SPINNER */
+.contenedor-spinner
+{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(3, 229, 245, 0.2);
+    backdrop-filter: blur(3px);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 99999;
+}

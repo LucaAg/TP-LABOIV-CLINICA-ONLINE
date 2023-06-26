@@ -13,11 +13,12 @@ export class UsuariosComponent {
   popUpRef:any;
   boxRef:any;
   registroRef:any;
-  spinner:any;
+  spinner: boolean = false;
   pantalla:any;
   constructor(private firebaseServi:FirebaseService,private auth:AuthService,
     private router:Router)
   {
+    this.activarSpinner();
   }
 
   ngOnInit()
@@ -27,9 +28,7 @@ export class UsuariosComponent {
 
   ngAfterViewInit()
   {
-    this.spinner = document.getElementById('spinner');
     this.pantalla = document.getElementById('pantalla');
-    this.activarSpinner();
     this.popUpRef = document.getElementById('contenedor-pop-up');
     this.boxRef = document.getElementById('box');
     this.registroRef = document.getElementById('registro');
@@ -37,11 +36,9 @@ export class UsuariosComponent {
 
   activarSpinner()
   {
-    this.spinner.classList.remove('esconder');
-    this.pantalla.classList.add('esconder');
+    this.spinner = true;
     setTimeout(()=>{
-      this.spinner.classList.add('esconder');
-      this.pantalla.classList.remove('esconder');
+      this.spinner = false;
     },3000);
   }
 

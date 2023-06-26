@@ -136,7 +136,9 @@
         </div>
     </form>
   </div>
-  <app-spinner class="esconder" id="spinner"></app-spinner>
+  <div class="esconder contenedor-spinner" id="spinner" *ngIf="spinner">
+    <app-spinner ></app-spinner>
+  </div>
 
  
 

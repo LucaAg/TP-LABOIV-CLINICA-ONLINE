@@ -1,0 +1,45 @@
+<div class="pantalla">
+    <div class="box">
+       <h1>MI PERFIL</h1>
+       <div class="contenedor-info" *ngIf="esEspecialista">
+            <div>
+                <img [src]="usuario.imagen1" alt="">
+            </div>
+            <div class="contenedor-labels">
+                <label for="">Nombre: {{usuario.nombre}}</label>
+                <label for="">Apellido: {{usuario.apellido}}</label>
+            </div>
+            <div class="contenedor-labels">
+                <label for="">DNI: {{usuario.dni}}</label>
+                <label for="">Edad: {{usuario.edad}}</label>
+            </div>
+            <div class="contenedor-labels"> 
+                <label for="">Email: {{usuario.email}}</label>
+                <label for="">Perfil: {{usuario.perfil}}</label>
+            </div>
+            <div class="contenedor-labels">
+                <label for="">Especialidades:</label>
+                <label *ngFor="let especialidad of usuario.especialidad">{{especialidad}}</label>
+            </div>
+            <div class="contenedor-labels">
+                <label for="">Días:</label>
+            </div>
+            <div class="contenedor-botones">
+                <button>Lunes</button>
+                <button>Martes</button>
+                <button>Miercoles</button>
+                <button>Jueves</button>
+                <button>Viernes</button>
+                <button>Sabado</button>
+                <button>Domingo</button>
+            </div>
+            <div class="contenedor-labels">
+                <label for="">Duración del turno:</label>
+                <input type="text" placeholder="Duración">
+            </div>
+       </div>
+       <div *ngIf="!esEspecialista">
+
+       </div>
+    </div>
+</div>

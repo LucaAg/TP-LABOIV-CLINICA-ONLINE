@@ -49,4 +49,7 @@
         <app-form-registro-admin (registroCompletado)="registroAdminCompletado()"></app-form-registro-admin>
       </div>
 </div>
-<app-spinner class="esconder" id="spinner"></app-spinner>
+<div class="contenedor-spinner" *ngIf="spinner">
+    <app-spinner id="spinner"></app-spinner>
+</div>
+

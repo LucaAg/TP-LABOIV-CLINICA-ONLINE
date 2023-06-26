@@ -15,7 +15,7 @@ export class FormRegistroPacienteComponent {
   formPaciente: FormGroup;
   patterDNI:string="[0-9]{8}";
   patternContraseña:string=".{6,}";
-  spinner:any;
+  spinner:boolean = false;
   box:any;
   private emailPattern: any = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -34,23 +34,20 @@ export class FormRegistroPacienteComponent {
       imagen: ['', [Validators.required]],
       imagen2: ['', [Validators.required]],
     });
+    this.activarSpinner();
 
   }
 
   ngAfterViewInit()
   {
-    this.spinner = document.getElementById('spinner');
     this.box = document.getElementById('box');
-    this.activarSpinner();
   }
 
   activarSpinner()
   {
-    this.spinner.classList.remove('esconder');
-    this.box.classList.add('esconder');
+    this.spinner = true;
     setTimeout(()=>{
-      this.spinner.classList.add('esconder');
-      this.box.classList.remove('esconder');
+      this.spinner = false;
     },3000);
   }
 

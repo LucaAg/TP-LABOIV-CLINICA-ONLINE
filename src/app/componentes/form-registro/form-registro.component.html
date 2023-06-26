@@ -114,6 +114,11 @@
             formEspecialista.controls['imagen'].touched ">
             *La imagen es obligatoria
             </small>
+            <small
+            class="mensaje-error"
+            *ngIf="!errorAgregarEspecialidad">
+            *La imagen es obligatoria
+        </small>
         </div>
         <div class="contendor-boton">
           <button type="submit">Registrar especialista</button>
@@ -129,6 +134,19 @@
             formAgregarEspecialista.controls['nuevaEspecialidad'].errors?.['required'] &&
             formAgregarEspecialista.controls['nuevaEspecialidad'].touched">
             *La nueva especialidad es obligatoria
+        </small><br>
+        <label for="">Foto relacionada a la especialidad</label><br>
+        <input class="imagen-especialidad" (change)="cargarImagen($event)" formControlName="imagenNuevaEspecialidad" form  type="file" placeholder="Seleccionar foto"><br>
+        <small
+            class="mensaje-error"
+            *ngIf="formAgregarEspecialista.controls['imagenNuevaEspecialidad'].errors?.['required'] &&
+            formAgregarEspecialista.controls['imagenNuevaEspecialidad'].touched ">
+            *La imagen es obligatoria
+        </small>
+        <small
+            class="mensaje-error"
+            *ngIf="!errorAgregarEspecialidadImagen">
+            *La nueva especialidad es obligatoria
         </small>
         <div class="botones-pop-up">
           <button type="button" (click)="agregarEspecialidad()">Aceptar</button>
@@ -137,6 +155,8 @@
       </form>
     </div>
   </div>
-  <app-spinner class="esconder" id="spinner"></app-spinner>
+  <div class="esconder contenedor-spinner" id="spinner" *ngIf="spinner">
+    <app-spinner ></app-spinner>
+  </div>
 
 

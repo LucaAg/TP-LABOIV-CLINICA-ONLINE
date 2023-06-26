@@ -6,5 +6,22 @@ import { Component } from '@angular/core';
   styleUrls: ['./turnos.component.css']
 })
 export class TurnosComponent {
+  spinner:boolean = false;
+  especialidad:boolean = false;
+  especialista:boolean = false;
+
+  constructor()
+  {
+    //this.activarSpinner();
+  }
+
+
+  activarSpinner()
+  {
+    this.spinner = true;
+    setTimeout(()=>{
+      this.spinner = false;
+    },3000);
+  }
 
 }

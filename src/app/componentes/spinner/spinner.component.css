@@ -1,12 +1,4 @@
-.pantalla-spinner
-{
-  background-size: 100% 100vh;
-  background-color: #3884db;
-  background-attachment: fixed;
-  background-position: center;
-  min-height: 100vh;
-  
-}
+
 .heartbeatloader {
   position: absolute;
   width: 10vmin;

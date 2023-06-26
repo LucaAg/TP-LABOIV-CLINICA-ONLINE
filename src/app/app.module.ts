@@ -24,6 +24,7 @@ import { FormRegistroAdminComponent } from './componentes/form-registro-admin/fo
 import { PopoverModule } from 'ngx-bootstrap/popover';
 import { TurnosComponent } from './paginas/turnos/turnos.component';
 import { SolicitarTurnoComponent } from './paginas/solicitar-turno/solicitar-turno.component';
+import { MiPerfilComponent } from './paginas/mi-perfil/mi-perfil.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { SolicitarTurnoComponent } from './paginas/solicitar-turno/solicitar-tur
     UsuariosComponent,
     FormRegistroAdminComponent,
     TurnosComponent,
-    SolicitarTurnoComponent
+    SolicitarTurnoComponent,
+    MiPerfilComponent
   ],
   imports: [
     BrowserModule,
