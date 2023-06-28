@@ -21,15 +21,32 @@ export class SolicitarTurnoComponent {
   listaHorarios:any = new Array();
   listaTurnos:any;
   fechaTurnoSeleccionado:string = "";
-  pantalla = 0;
+  pantalla = 1;
   paciente:any;
   popup:any;
+  listaPacientes:any = new Array();
+  admin:any;
   constructor(private firebaseServi:FirebaseService,
     private auth:AuthService,
     private sweetServ: SweetService)
   {
     this.auth.obtenerUsuarioIniciado().subscribe((usuario)=>{
       this.paciente = usuario;
+      if(this.paciente.perfil == 'admin')
+      {
+        this.admin = this.paciente;
+        this.pantalla = 0;
+        this.listaPacientes = [];
+        this.firebaseServi.obtenerUsuarios().subscribe((usuarios)=>{
+          for (let i = 0; i < usuarios.length; i++) {
+            if(usuarios[i].perfil == 'paciente')
+            {
+              this.listaPacientes.push(usuarios[i]);
+            }
+          }
+        });
+        console.log(this.listaPacientes);
+      }
     });
     this.firebaseServi.obtenerTurnos().subscribe((turnos)=>{
       this.listaTurnos = turnos;
@@ -68,6 +85,12 @@ export class SolicitarTurnoComponent {
   elegirEspecialista(especialista:any)
   {
     this.especialistaSeleccionado = especialista;
+    this.pantalla++;
+  }
+
+  elegirPaciente(paciente:any)
+  {
+    this.paciente = paciente;
     this.pantalla++;
   }
 
@@ -143,9 +166,17 @@ export class SolicitarTurnoComponent {
     }
     this.firebaseServi.agregarDocumento('turnos',turno);
     this.sweetServ.mensajeExitoso("Turno solicitado","Turnos");
-    this.pantalla = 0;
+    if(this.admin)
+    {
+      this.pantalla = 0;
+    }
+    else
+    {
+      this.pantalla = 1;
+    }
     this.popup = false;
   }
+  
   
   seleccionarHorario(dia:string,hora:string)
   {
@@ -162,12 +193,11 @@ export class SolicitarTurnoComponent {
     const horaFormateada = horaDate.toLocaleString('es-AR', {
       hour: 'numeric',
       minute: 'numeric',
-      hour12: false,
+      hourCycle: 'h12',      
       timeZone: 'America/Argentina/Buenos_Aires'
     });
-    const indicacion = horaDate.getHours() < 12 ? 'AM' : 'PM';
   
-    return `${horaFormateada} ${indicacion}`;
+    return `${horaFormateada}`;
   }
 
 

@@ -26,6 +26,10 @@ import { TurnosComponent } from './paginas/turnos/turnos.component';
 import { SolicitarTurnoComponent } from './paginas/solicitar-turno/solicitar-turno.component';
 import { MiPerfilComponent } from './paginas/mi-perfil/mi-perfil.component';
 import { MisTurnosComponent } from './paginas/mis-turnos/mis-turnos.component';
+import { EncuestaComponent } from './componentes/encuesta/encuesta.component';
+import { PacientesComponent } from './paginas/pacientes/pacientes.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormHistorialClinicoComponent } from './componentes/form-historial-clinico/form-historial-clinico.component';
 
 @NgModule({
   declarations: [
@@ -42,10 +46,14 @@ import { MisTurnosComponent } from './paginas/mis-turnos/mis-turnos.component';
     TurnosComponent,
     SolicitarTurnoComponent,
     MiPerfilComponent,
-    MisTurnosComponent
+    MisTurnosComponent,
+    EncuestaComponent,
+    PacientesComponent,
+    FormHistorialClinicoComponent
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,

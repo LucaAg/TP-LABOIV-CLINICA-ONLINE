@@ -3,11 +3,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/servicios/auth.service';
 import { FirebaseService } from 'src/app/servicios/firebase.service';
 import { SweetService } from 'src/app/servicios/sweet.service';
+import { bounceIn } from '../animaciones';
 
 @Component({
   selector: 'app-mi-perfil',
   templateUrl: './mi-perfil.component.html',
-  styleUrls: ['./mi-perfil.component.css']
+  styleUrls: ['./mi-perfil.component.css'],
+  animations: [bounceIn]
 })
 export class MiPerfilComponent {
   esEspecialista:boolean =false;

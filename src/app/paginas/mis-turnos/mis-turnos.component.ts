@@ -3,11 +3,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/servicios/auth.service';
 import { FirebaseService } from 'src/app/servicios/firebase.service';
 import { SweetService } from 'src/app/servicios/sweet.service';
+import { deslizarIzqADerAnimacion } from '../animaciones';
 
 @Component({
   selector: 'app-mis-turnos',
   templateUrl: './mis-turnos.component.html',
-  styleUrls: ['./mis-turnos.component.css']
+  styleUrls: ['./mis-turnos.component.css'],
+  animations: [deslizarIzqADerAnimacion]
 })
 export class MisTurnosComponent {
   palabraFiltro:string = '';
@@ -22,6 +24,13 @@ export class MisTurnosComponent {
   accion:string = "";
   turnoEspActualizar:any;
   resenia:string = '';
+  encuesta:boolean = false;
+  turnoACalificar:any;
+  pacienteSolicitado:any;
+  historialClinico:boolean = false;
+  dato1: string[] = ['clave 1', 'valor 1'];
+  dato2: string[] = ['clave 2', 'valor 2'];
+  dato3: string[] = ['clave 3', 'valor 3'];
   constructor(private fireServ:FirebaseService,
     private sweetServ: SweetService,
     private authServ:AuthService,
@@ -154,6 +163,7 @@ export class MisTurnosComponent {
   {
     this.accion = "Finalizar";
     this.turnoEspActualizar = turno;
+    this.pacienteSolicitado = turno.paciente;
     this.popupEspecialista = true;
     console.log('Finalizo el turno: ' + turno);
   }
@@ -180,10 +190,18 @@ export class MisTurnosComponent {
         this.asignarDatosTurno('cancelado',1);
         break;  
       case 'Finalizar':
-        this.asignarDatosTurno('finalizado',1);
+        this.asignarDatosTurno('finalizado',3);
+        break;  
+      case 'Calificar':
+        this.asignarDatosTurno('finalizado',2);
         break;  
     }
     
+  }
+
+  cargarHistoriaClinica()
+  {
+    this.historialClinico = true;
   }
 
   asignarDatosTurno(estadoNuevo:string,tipo:number)
@@ -195,10 +213,20 @@ export class MisTurnosComponent {
       especialista: this.turnoEspActualizar.especialista,
       paciente: this.turnoEspActualizar.paciente,
       fecha: this.turnoEspActualizar.fecha,
-      estado: estadoNuevo
+      estado: estadoNuevo,
+      calificacionEspecialista: ''
     }
     if(tipo == 1)
     {
+      moldeTurno.comentario = this.formAccion.getRawValue().accionForm;
+    }
+    else if(tipo == 2)
+    {
+      moldeTurno.calificacionEspecialista = this.formAccion.getRawValue().accionForm;
+    }
+    else if(tipo == 3)
+    {
+      this.cargarHistoriaClinica();
       moldeTurno.comentario = this.formAccion.getRawValue().accionForm;
     }
     console.log(moldeTurno);
@@ -206,5 +234,40 @@ export class MisTurnosComponent {
     this.popupEspecialistaAceptar = false;
     this.formAccion.reset();
     this.fireServ.actualizarTurno(moldeTurno);
+  }
+
+
+  onEncuestaCompletada(e:any)
+  {
+    if(!e)
+    {
+      this.sweetServ.mensajeExitoso("¡Gracias a su tiempo mejoramos cada día!","Encuesta completada");
+    }
+    this.encuesta = false;
+  }
+
+  accionCalificar(turno:any)
+  {
+    this.accion = "Calificar";
+    this.turnoEspActualizar = turno;
+    this.popupEspecialista = true;
+  }
+
+  onHistorialTerminado(e:any)
+  {
+    if(e != 'Cancelar')
+    {
+      e.paciente = this.turnoEspActualizar.paciente;
+      e.especialista = this.turnoEspActualizar.especialista;
+      e.especialidad = this.turnoEspActualizar.especialidad;
+      console.log(e);
+      this.fireServ.agregarDocumento('historiales-clinicos',e);
+      this.sweetServ.mensajeExitoso('Historial clínico agregado correctamente','Historial clínico');
+      this.historialClinico = false;
+    }
+    else
+    {
+      this.historialClinico = false;
+    }
   }
 }

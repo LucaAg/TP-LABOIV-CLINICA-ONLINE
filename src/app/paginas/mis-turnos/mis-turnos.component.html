@@ -1,7 +1,7 @@
 <div class="pantalla">
-    <div class="contenedor-tabla">
-        <div class="tabla">
-            <div class="encabezado-tabla">
+    <div class="contenedor-tabla" >
+        <div class="tabla" [@entrarIzqADer]>
+            <div class="encabezado-tabla" [@entrarIzqADer]>
                 <img class="logo" src="../../../assets/logoClinica.png" alt="">
                     <h3>{{usuario?.perfil.toUpperCase()}}: {{usuario?.apellido}}, {{usuario?.nombre}}</h3>
                     <div class="botonera">
@@ -72,6 +72,8 @@
                 </div>
             </form>
           </div>
+          <!-- HISTORIA CLINICA -->
+
           <!-- ACEPTAR TURNO ESPECIALISTA -->
           <div id="contenedor-pop-up" class="pop-up" *ngIf="popupEspecialistaAceptar">
             <div class="contenedor-imagen-popup">
@@ -93,7 +95,7 @@
                 </div>
           </div>
           <!-- PACIENTEE -->
-          <div class="seccion-tabla" *ngIf="usuario?.perfil == 'paciente'">
+          <div class="seccion-tabla" *ngIf="usuario?.perfil == 'paciente'" [@entrarIzqADer]>
             <table>
                 <thead>
                     <tr>
@@ -114,14 +116,13 @@
                         <div class="botonera-acciones">
                             <button (click)="accionCancelarEsp(turno)" *ngIf="turno.estado == 'solicitado'">
                                 Cancelar</button>
-                            <button (click)="accionRechazar(turno)" *ngIf="turno.estado == 'solicitado'">
-                                Rechazar</button>
-                            <button (click)="accionAceptar(turno)" *ngIf="turno.estado == 'solicitado'">
-                                Aceptar</button>
-                            <button (click)="accionFinalizar(turno)" *ngIf="turno.estado == 'aceptado'">
-                                Finalizar</button>
-                            <button *ngIf="turno.estado == 'finalizado' && turno.comentario"
+                            <button *ngIf="turno.comentario"
                             (click)="verResenia(turno)">Ver reseña</button>
+                            <button (click)="encuesta = true" *ngIf="turno.estado == 'finalizado'
+                            && this.turno.comentario">
+                                Encuesta</button>
+                            <button (click)="accionCalificar(turno)" *ngIf="turno.estado == 'finalizado'">
+                                Calificar</button>
                         </div>
                         </td>
                     </tr>
@@ -130,4 +131,10 @@
       </div>
         </div>
     </div>
+</div>
+<div class="contenedor-encuesta" *ngIf="encuesta">
+    <app-encuesta (encuestaCompletada)="onEncuestaCompletada($event)"></app-encuesta>
+</div>
+<div class="contenedor-encuesta" *ngIf="historialClinico"  [@entrarIzqADer]>
+    <app-form-historial-clinico [paciente]="pacienteSolicitado" [especialista]="turnoEspActualizar.especialista" (historialCompleatado)="onHistorialTerminado($event)"></app-form-historial-clinico>
 </div>

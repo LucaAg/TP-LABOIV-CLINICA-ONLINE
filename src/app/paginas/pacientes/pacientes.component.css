@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC:wght@300&display=swap');*
+
+*
+{
+    padding: 0;
+    margin: 0;
+    font-family: 'Alegreya Sans SC', sans-serif;   
+}
+
+.pantalla
+{
+    background-image: url('../../../assets/registro/fondo.jpg');
+    background-repeat: no-repeat;
+    background-size: 100% 100vh;
+    background-attachment: fixed;
+    background-position: center;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+
+.pantalla .box 
+{
+    position: absolute;
+    width: 70%;
+    background: rgba(112, 112, 155, 0.2);
+    padding: 2%;
+    margin-top: 55vh;
+    color: rgb(0, 0, 0);
+    font-weight: bold;
+    text-align: center;
+    border-radius: 0.938rem;
+    border-color: #009aa5;
+    border-style: double;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    backdrop-filter: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}

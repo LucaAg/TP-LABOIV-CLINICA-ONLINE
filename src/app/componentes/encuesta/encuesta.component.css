@@ -1,0 +1,147 @@
+@import url('https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC:wght@300&display=swap');
+
+
+.encuesta-container {
+  font-family: 'Alegreya Sans SC', sans-serif;   
+  background-image: url('../../../assets/registro/fondo.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
+  min-height: 100vh;
+  padding-top: 6rem;
+}
+
+.contenedor-form {
+  width: 70vw;
+  padding-top: 1rem;
+  padding-bottom: 0.1rem;
+  background-color: rgba(68, 0, 65, 0.7);
+  border-radius: 10px;
+  color: white;
+  box-shadow: 0 0 16px rgb(170, 216, 243);
+}
+
+.campo-requerido {
+  color: red;
+  text-shadow: 1px 1px black;
+}
+
+input{
+    border: 3px double rgb(83, 76, 85);
+    background-color: #ceecee;
+    border-radius: 10px;
+}
+
+@media screen and (max-width: 500px) {
+  .contenedor-form {
+    width: 95vw;
+  }
+}
+/* ****************************************************************** */
+/* ****************************************************************** */
+/* ****************************************************************** */
+/* ****************************************************************** */
+
+/* .btn-enviar {
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  display: block;
+  margin: 1rem auto; 
+  font-size: 1.25em;
+  padding: 0.5em 1em;
+  background-color: #08d8f3;
+  border: 3px solid #ff4ef6;
+  color: #c10ff7;
+  border-radius: 0.9em;    
+} */
+
+.contenedor-boton
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+button {
+    position: relative;
+    background: #444;
+    color: #fff;
+    text-decoration: none;
+    text-transform: uppercase;
+    border: none;
+    letter-spacing: 0.1rem;
+    font-size: 0.7rem;
+    padding: 0.9rem 3rem;
+    transition: 0.2s;
+    padding: 0.7em 1.3em;
+    margin: 1em auto;
+  }
+  
+  button:hover {
+    letter-spacing: 0.2rem;
+    padding: 1.1rem 3.1rem;
+    background: var(--clr);
+    color: var(--clr);
+    /* box-shadow: 0 0 35px var(--clr); */
+    animation: box 3s infinite;
+  }
+  
+  button::before {
+    content: "";
+    position: absolute;
+    inset: 2px;
+    background: #272822;
+  }
+  
+  button span {
+    position: relative;
+    z-index: 1;
+  }
+  button i {
+    position: absolute;
+    inset: 0;
+    display: block;
+  }
+  
+  button i::before {
+    content: "";
+    position: absolute;
+    width: 0.625rem;
+    height: 0.125rem;
+    left: 80%;
+    top: -0.125rem;
+    border: 0.125rem solid var(--clr);
+    background: #272822;
+    transition: 0.2s;
+  }
+  
+  button:hover i::before {
+    width: 0.938rem;
+    left: 20%;
+    animation: move 3s infinite;
+  }
+  
+  button i::after {
+    content: "";
+    position: absolute;
+    width: 0.625rem;
+    height: 0.125rem;
+    left: 20%;
+    bottom: -0.125rem;
+    border: 0.125rem solid var(--clr);
+    background: #272822;
+    transition: 0.2s;
+  }
+  
+  button:hover i::after {
+    width: 0.938rem;
+    left: 80%;
+    animation: move 3s infinite;
+  }
+

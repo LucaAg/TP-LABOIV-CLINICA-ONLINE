@@ -1,5 +1,5 @@
 <div class="pantalla">
-    <div [ngClass]="esEspecialista ? 'box' : 'box2'">
+    <div [ngClass]="esEspecialista ? 'box' : 'box2'" [@bounceIn]>
         <h1>MI PERFIL</h1>
         <div class="contenedor-info" *ngIf="esEspecialista">
             <div>

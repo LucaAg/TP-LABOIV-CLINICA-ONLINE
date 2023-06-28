@@ -1,0 +1,247 @@
+<div class="encuesta-container">
+    <form
+      
+      [formGroup]="encuestaForm"
+      class="container contenedor-form"
+      (ngSubmit)="cargarForm()"
+    >
+      <div class="row d-flex flex-wrap">
+        <!-- INPUT NOMBRE -->
+        <div class="col-sm mb-3">
+          <label for="nombre" class="form-label">Nombre</label>
+          <input
+            formControlName="nombre"
+            type="text"
+            class="form-control"
+            id="nombre"
+            placeholder="Nombre"
+          />
+          <small
+            style="color: rgb(10, 192, 248); font-weight: lighter; font-style: italic;"
+            *ngIf="
+            encuestaForm.controls['nombre'].errors?.['required'] &&
+            encuestaForm.controls['nombre'].touched
+                      "
+          >
+            *El Nombre es requerido
+          </small>
+        </div>
+        <!-- INPUT APELLIDO -->
+        <div class="col-sm mb-3">
+          <label for="apellido" class="form-label">Apellido</label>
+          <input
+            formControlName="apellido"
+            type="text"
+            class="form-control"
+            id="apellido"
+            placeholder="Apellido"
+          />
+          <small
+            style="color: rgb(10, 192, 248); font-style: italic;font-weight: lighter"
+            *ngIf="
+            encuestaForm.controls['apellido'].errors?.['required'] &&
+            encuestaForm.controls['apellido'].touched
+                      "
+          >
+            El Apellido es requerido
+          </small>
+        </div>
+      </div>
+      <div class="row">
+        <!-- INPUT EDAD -->
+        <div class="col-sm mb-3">
+          <label for="edad" class="form-label">Edad</label>
+          <input
+            formControlName="edad"
+            type="number"
+            class="form-control"
+            id="edad"
+            placeholder="Edad"
+            min="18"
+            max="99"
+          />
+          <small
+            style="color: rgb(10, 192, 248); font-style: italic"
+            *ngIf="
+            encuestaForm.controls['edad'].errors?.['required'] &&
+            encuestaForm.controls['edad'].touched
+                  "
+          >
+            La Edad es requerida
+          </small>
+          <small
+            style="color: rgb(10, 192, 248); font-style: italic"
+            *ngIf="
+            encuestaForm.controls['edad'].errors?.['min'] ||
+                    (encuestaForm.controls['edad'].errors?.['max'] &&
+                    encuestaForm.controls['edad'].touched)
+                  "
+          >
+            La Edad debe ser de 18 a 99 años
+          </small>
+        </div>
+        <!-- INPUT TELÉFONO -->
+        <div class="col-sm mb-3">
+          <label for="telefono" class="form-label">Teléfono</label>
+          <input
+            formControlName="telefono"
+            type="text"
+            class="form-control"
+            id="telefono"
+            placeholder="Teléfono"
+          />
+          <small
+            style="color: rgb(10, 192, 248); font-style: italic"
+            *ngIf="
+            encuestaForm.controls['telefono'].errors?.['required'] &&
+            encuestaForm.controls['telefono'].touched
+                  "
+          >
+            La Teléfono es requerido
+          </small>
+          <small
+            style="color: rgb(10, 192, 248); font-style: italic"
+            *ngIf="
+                    (encuestaForm.controls['telefono'].errors?.['maxlength'] &&
+                    encuestaForm.controls['telefono'].touched)
+                  "
+          >
+            La Teléfono debe tener 10 digitos o menos
+          </small>
+          <small
+            style="color: rgb(10, 192, 248); font-style: italic"
+            *ngIf="
+                    (encuestaForm.controls['telefono'].errors?.['pattern'] &&
+                    encuestaForm.controls['telefono'].touched)
+                  "
+          >
+            Se deben ingresar solo números
+          </small>
+        </div>
+      </div>
+      <!-- PREGUNTAS -->
+      <hr />
+      <div class="mb-3 row d-flex flex-wrap">
+        <!-- INPUT JUEGO NUEVO -->
+        <div class="col-sm mb-3">
+          <label class="form-label">¿Qué juego te gustaría que sumemos?</label>
+          <div class="form-check">
+            <input
+              formControlName="masPersonal"
+              class="form-check-input"
+              type="checkbox"
+              value="masPersonal"
+              id="personal"
+            />
+            <label class="form-check-label" for="personal"> Más personal </label>
+          </div>
+          <div class="form-check">
+            <input
+              formControlName="masSuministros"
+              class="form-check-input"
+              type="checkbox"
+              value="masSuministros"
+              id="suministros"
+            />
+            <label class="form-check-label" for="suministros"> Más suministros </label>
+          </div>
+          <div class="form-check">
+            <input
+              formControlName="juegosEspera"
+              class="form-check-input"
+              type="checkbox"
+              value="juegos"
+              id="ppt"
+            />
+            <label class="form-check-label" for="ppt">
+              Juegos para la espera
+            </label>
+          </div>
+          <small *ngIf="validNewGame" class="campo-requerido">
+            {{ validNewGame }}</small
+          >
+        </div>
+        <!-- INPUT JUEGO FAVORITO -->
+        <div class="col-sm mb-3">
+          <label class="form-label">¿Qué destacas de nuestros especialistas? </label>
+          <div class="form-check">
+            <input
+              formControlName="especialistaFavorito"
+              class="form-check-input"
+              type="radio"
+              name="especialistaFavorito"
+              id="opcion1"
+              value="Atención"
+              checked
+              required
+            />
+            <label class="form-check-label" for="opcion1"> Atención </label>
+          </div>
+          <div class="form-check">
+            <input
+              formControlName="especialistaFavorito"
+              class="form-check-input"
+              type="radio"
+              name="especialistaFavorito"
+              id="opcion2"
+              value="Humanidad"
+            />
+            <label class="form-check-label" for="opcion2"> Humanidad </label>
+          </div>
+          <div class="form-check">
+            <input
+              formControlName="especialistaFavorito"
+              class="form-check-input"
+              type="radio"
+              name="especialistaFavorito"
+              id="opcion3"
+              value="Escucha al paciente"
+            />
+            <label class="form-check-label" for="opcion3"> Escucha al paciente </label>
+          </div>
+          <div class="form-check">
+            <input
+              formControlName="especialistaFavorito"
+              class="form-check-input"
+              type="radio"
+              name="especialistaFavorito"
+              id="opcion4"
+              value="Profesionalidad"
+            />
+            <label class="form-check-label" for="opcion4">
+              Profesionalidad
+            </label>
+          </div>
+        </div>
+        <!-- INPUT RECOMENDAR PAGINA -->
+        <div class="col-sm mb-3">
+          <label class="form-label">¿Nos recomendarías?</label>
+          <select
+            style="width: 10rem"
+            class="form-select"
+            id="recomendacion"
+            formControlName="recomiendaPagina"
+          >
+            <option value="" selected>Elegir opción...</option>
+            <option value="si">SI</option>
+            <option value="no">NO</option>
+          </select>
+          <small
+            style="color: red"
+            *ngIf="
+            encuestaForm.controls['recomiendaPagina'].errors?.['required'] &&
+            encuestaForm.controls['recomiendaPagina'].touched
+                "
+          >
+            Respesta requerida
+          </small>
+        </div>
+      </div>
+      <hr />
+      <div class="contenedor-boton">
+        <button  style="--clr:#FF44CC" type="submit"><span>Terminar encuesta</span><i></i></button>
+        <button (click)="cancelar()"  style="--clr:#FF44CC" type="button"><span>Cancelar</span><i></i></button>
+      </div>
+      <!-- <button type="submit" class="btn-enviar">Enviar encuesta</button> -->
+    </form>
+  </div>

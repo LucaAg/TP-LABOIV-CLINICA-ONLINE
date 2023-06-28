@@ -9,9 +9,9 @@
             <li *ngIf="authService.estaLogueado && usuarioLogueado.perfil == 'admin'"><a routerLink="turnos" >Turnos</a></li>
             <li *ngIf="authService.estaLogueado && (usuarioLogueado.perfil == 'admin' || usuarioLogueado.perfil == 'paciente')"><a routerLink="solicitar-turno" >Solicitar turno</a></li>
             <li *ngIf="authService.estaLogueado"><a routerLink="mi-perfil" >Mi perfil</a></li>
-            <!-- <li *ngIf="authService.estaLogueado && (usuarioLogueado.perfil == 'especialista' || 
-            usuarioLogueado.perfil == 'paciente')"><a routerLink="mis-turnos">Mis turnos</a></li> -->
-            <li><a routerLink="mis-turnos">Mis turnos</a></li>
+            <li *ngIf="authService.estaLogueado && (usuarioLogueado.perfil == 'especialista' || 
+            usuarioLogueado.perfil == 'paciente')"><a routerLink="mis-turnos">Mis turnos</a></li>
+            <li *ngIf="authService.estaLogueado && usuarioLogueado.perfil == 'especialista'"><a routerLink="pacientes" >Pacientes</a></li>
         </ul>
     
         <div class="main" *ngIf="!authService.estaLogueado">

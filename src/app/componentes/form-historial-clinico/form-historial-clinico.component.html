@@ -1,0 +1,79 @@
+<div class="encuesta-container">
+    <div class="container contenedor-form">
+      <div class="row d-flex flex-wrap">
+        <!-- INPUT PESO -->
+        <div class="col-sm mb-3">
+          <label for="peso" class="form-label">Peso</label>
+          <input
+            [(ngModel)]="peso"
+            type="number"
+            class="form-control"
+            id="peso"
+            placeholder="Peso (KG)"
+          />
+        </div>
+        <!-- INPUT TEMPERATURA -->
+        <div class="col-sm mb-3">
+          <label for="temperatura" class="form-label">Temperatura</label>
+          <input
+            [(ngModel)]="temperatura"
+            type="text"
+            class="form-control"
+            id="temperatura"
+            placeholder="Temperatura (°C)"
+          />
+        </div>
+      </div>
+      <div class="row">
+        <!-- INPUT PRESION -->
+        <div class="col-sm mb-3">
+          <label for="presion" class="form-label">Presión</label>
+          <input
+            [(ngModel)]="presion"
+            type="number"
+            class="form-control"
+            id="presion"
+            placeholder="Presión"
+          />
+        </div>
+        <!-- INPUT ALTURA -->
+        <div class="col-sm mb-3">
+          <label for="altura" class="form-label">Altura</label>
+          <input
+          [(ngModel)]="altura"
+            type="text"
+            class="form-control"
+            id="altura"
+            placeholder="Altura (Metros)"
+          />
+        </div>
+      </div>
+      <!-- PREGUNTAS -->
+      <hr />
+      <div class="contenedor-inputs-dinamicos" *ngFor="let campo of camposDinamicos; let i = index;">
+        <div class="campos-dinamicos">
+          <label for="key{{i}}">Campo</label>
+          <input type="text" class="form-control" id="key{{i}}" [(ngModel)]="campo.key" placeholder="Campo" />
+          <label for="value{{i}}">Valor</label>
+          <input type="text" class="form-control" id="value{{i}}" [(ngModel)]="campo.value" placeholder="Valor" />
+          <button type="button" style="--clr:#FF44CC" (click)="quitarCampoDinamico(i)"><span>Borrar campo</span><i></i></button>
+        </div>
+        <hr />
+      </div>
+      <div class="contenedor-boton">
+        <button type="button" style="--clr:#FF44CC;" (click)="agregarCamposDinamicos()" *ngIf="camposDinamicos.length < 3"><span>Añadir campo</span><i></i></button>
+      </div>
+      <hr />
+      <div class="contenedor-error">
+        <small
+            style="color: rgb(10, 192, 248); font-weight: lighter; font-style: italic;"
+            *ngIf="error">
+            *Altura, peso, presion y temperatura son campos obligatorios
+        </small>
+      </div>
+      <div class="contenedor-boton">
+        <button style="--clr:#FF44CC" type="button" (click)="crearHistorial()"><span>Terminar historial</span><i></i></button>
+        <button (click)="cancelar()" style="--clr:#FF44CC" type="button"><span>Cancelar</span><i></i></button>
+      </div>
+    </div>
+  </div>
