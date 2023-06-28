@@ -1,45 +1,85 @@
 <div class="pantalla">
-    <div class="box">
-       <h1>MI PERFIL</h1>
-       <div class="contenedor-info" *ngIf="esEspecialista">
+    <div [ngClass]="esEspecialista ? 'box' : 'box2'">
+        <h1>MI PERFIL</h1>
+        <div class="contenedor-info" *ngIf="esEspecialista">
             <div>
                 <img [src]="usuario.imagen1" alt="">
-            </div>
+            </div><br>
+            <div class="info-fundamental">
+                <div class="contenedor-labels1">
+                    <h5 for="">NOMBRE: {{usuario.nombre}}</h5>
+                    <h5 for="">APELLIDO: {{usuario.apellido}}</h5>
+                    <h5 for="">DNI: {{usuario.dni}}</h5>
+                    <h5 for="">EDAD: {{usuario.edad}}</h5>
+                </div>
+                <div class="contenedor-labels2"> 
+                    <h5 for="">EMAIL: {{usuario.email}}</h5>
+                    <h5 for="">PERFIL: {{usuario.perfil}}</h5>
+                    <h5 *ngIf="esEspecialista" for="">ESPECIALIDADES:
+                        <button (click)="seleccionarEspecialidad(especialidad)" 
+                        *ngFor="let especialidad of usuario.especialidad; let i = index"
+                        [ngClass]="especialidad != especialidadElegida ? 'btn-diaNegado' : ''">
+                            {{especialidad}}
+                        </button>
+                    </h5>
+                </div>
+            </div><br>
             <div class="contenedor-labels">
-                <label for="">Nombre: {{usuario.nombre}}</label>
-                <label for="">Apellido: {{usuario.apellido}}</label>
+                <h4 for="">Duración del turno (Actual: {{duracionTurno}} Min.):</h4>
             </div>
-            <div class="contenedor-labels">
-                <label for="">DNI: {{usuario.dni}}</label>
-                <label for="">Edad: {{usuario.edad}}</label>
+            <form [formGroup]="formTiempoConsulta" (ngSubmit)="actualizarDuracion()">
+                <input class="input-turno" formControlName="tiempoConsulta" type="number">
+                <button type="submit" [disabled]="formTiempoConsulta.controls['tiempoConsulta'].errors">ACTUALIZAR</button>
+                <small *ngIf="(formTiempoConsulta.controls['tiempoConsulta'].errors?.['min'] ||
+                    formTiempoConsulta.controls['tiempoConsulta'].errors?.['max']) &&
+                    formTiempoConsulta.controls['tiempoConsulta'].touched">
+                    La duración debe ser entre 20 y 60 minutos
+                </small>
+            </form><br>
+            <div class="contenedor-labels" *ngIf="esEspecialista">
+                <h2 for="">CRONOGRAMA</h2>
             </div>
-            <div class="contenedor-labels"> 
-                <label for="">Email: {{usuario.email}}</label>
-                <label for="">Perfil: {{usuario.perfil}}</label>
-            </div>
-            <div class="contenedor-labels">
-                <label for="">Especialidades:</label>
-                <label *ngFor="let especialidad of usuario.especialidad">{{especialidad}}</label>
-            </div>
-            <div class="contenedor-labels">
-                <label for="">Días:</label>
-            </div>
-            <div class="contenedor-botones">
-                <button>Lunes</button>
-                <button>Martes</button>
-                <button>Miercoles</button>
-                <button>Jueves</button>
-                <button>Viernes</button>
-                <button>Sabado</button>
-                <button>Domingo</button>
-            </div>
-            <div class="contenedor-labels">
-                <label for="">Duración del turno:</label>
-                <input type="text" placeholder="Duración">
+            <div class="contenedor-horarios" *ngIf="esEspecialista">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Horarios</th>
+                            <th *ngFor="let dia of dias">{{dia}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let hora of horas">
+                            <th>{{hora}}</th>
+                            <td *ngFor="let dia of dias">
+                                <label >
+                                    <input type="checkbox" [value]="hora"
+                                    [checked]="estaDisponible(especialidadElegida, dia, hora)"
+                            (change)="actualizarDisponibilidad(especialidadElegida, dia, hora, $event)">
+                                </label>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
             </div>
        </div>
-       <div *ngIf="!esEspecialista">
-
+    <div class="contenedor-info" *ngIf="!esEspecialista">
+        <div class="contenedor-imagenes">
+            <img [src]="usuario?.imagen1" alt="">
+            <img [src]="usuario?.imagen2" alt="" *ngIf="esPaciente">
+        </div>
+        <div >
+            <div class="contenedor-info-fundamental">
+                <h5 for="">NOMBRE: {{usuario?.nombre}}</h5>
+                <h5 for="">APELLIDO: {{usuario?.apellido}}</h5>
+                <h5 for="">DNI: {{usuario?.dni}}</h5>
+                <h5 for="">EDAD: {{usuario?.edad}}</h5>
+            </div>
+            <div class="contenedor-info-fundamental"> 
+                <h5 for="">EMAIL: {{usuario?.email}}</h5>
+                <h5 for="">PERFIL: {{usuario?.perfil}}</h5>
+                <button *ngIf="esPaciente">Ver historial</button>
+            </div>
        </div>
     </div>
 </div>

@@ -18,7 +18,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
+    flex-direction: row;
 }
 
 
@@ -71,7 +71,7 @@
     padding: 0;
     margin: 0 10px; /* Espacio entre botones */
     border: none;
-    background: rgb(191, 235, 243);
+    background: none;
     cursor: pointer;
     display: flex;
     justify-content: center;
@@ -79,42 +79,171 @@
     
   }
 
-  .boton-especialista img
-  {
-    width: 22vh;
-    height: 22vh;
-  }
-
-.contenedor-especialidades div div button 
+.boton-especialista img
 {
-  width: 68vh;
-  height: 22.6vh;
-  background-image: url(../../../assets/pedirTurnos/triangulo.png);
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-color: transparent;
-  border-color: transparent;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center; /* Aplica una rotación de 45 grados al botón */
+  width: 22vh;
+  height: 22vh;
 }
 
-.contenedor-especialidades
+.boton-volver
 {
+  margin-top: 2vh;
+  padding: 1vh;
+  background-color: #03e5f5;
+  border-radius: 10px;
+  color: black;
+  font-weight: bold;
+}
+
+
+h6, h2, h4
+{
+  color:black;
+}
+
+.contenedor-especialidades {
   display: flex;
   justify-content: center;
+}
+
+.especialidad-item {
+  display: flex;
+  flex-direction: column;
   align-items: center;
+  margin: 0 10px;
 }
 
-.contenedor-especialidades div div button img
-{
-  margin-top:4.5vh;
-  position: absolute;
-  width: 7vh;
-  height: 7vh;
+.especialidad-button {
+  position: relative;
+  width: 22vh;
+  height: 14vh;
+  border: 2px double red;
+  background-color: #009aa5;
+  cursor: pointer;
+  overflow: hidden;
 }
+
+p
+{
+  font-style: italic;
+  color:black;
+}
+
+.especialidad-button:hover
+{
+  background-color:#03e5f5;
+}
+
+
+.especialidad-image {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+
+.contenedor-botones
+{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 5px;
+}
+
+.contendor-horarios {
+  min-width: 85vh;
+  min-height: 50vh;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  border-radius: 0.938rem;
+  border-color: #009aa5;
+  border-style: double;
+}
+
+.horario-button {
+  padding: 5px 5px;
+  width: 13vh;
+  height: 13vh;
+  border: 2px double black;
+  font-size: 16px;
+  background-color:#009aa5;
+  cursor: pointer;
+}
+
+.horario-button:hover
+{
+  background-color: aqua;
+}
+
+.contenedor-submit
+{
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: column;
+}
+
+/* POP UP*/
+.pop-up
+{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(151, 219, 231, 0.5);
+  align-content: center;
+  text-align: center;
+  border: 0.188rem solid black;
+  border-radius: 0.625rem;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: column;
+  height: 35%;
+  width: 35%;
+  color: rgb(13, 151, 71);
+  backdrop-filter: blur(0.625rem);
+}
+
+.botones-pop-up
+{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin-top: 1.25rem;
+}
+
+.boton-pop-up
+{
+    background: linear-gradient(to right, #ff0000 50%, #136bcf 50%);
+    border: none;
+    color: white;
+    padding: 0.625rem 1.25rem;
+    border-radius: 1.25rem;
+    cursor: pointer;
+}
+
+.contenedor-imagen-popup
+{
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.imagen-cancelar
+{
+    width: 1.25rem;
+    cursor: pointer;  
+}
+
+
 
 /* SPINNER */
 .contenedor-spinner

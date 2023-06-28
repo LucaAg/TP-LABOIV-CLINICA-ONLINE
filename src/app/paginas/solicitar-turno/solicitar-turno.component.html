@@ -1,27 +1,51 @@
 <div class="pantalla">
     <div class="box">
+      <h2>Especialistas</h2>
         <div class="contenedor-botones" >
-            <div class="fila-botones" *ngFor="let especialista of listaEspecialistas">
-                <div class="botonera" *ngIf="boxEspecialista">
+          <div class="fila-botones" *ngFor="let especialista of listaEspecialistas">
+                <div class="botonera" *ngIf="pantalla > -1">
                     <button (click)="elegirEspecialista(especialista)" class="boton-especialista"
                     [popover]="'Especialista: ' + especialista.apellido + ', ' + especialista.nombre"
                     triggers="mouseenter:mouseleave"><img [src]="especialista.imagen1"alt=""></button>
                 </div>              
             </div>
         </div>
-        <div class="contenedor-especialidades">
-            <div *ngIf="boxEspecialidades">
-                <div *ngFor="let especialidad of especialistaSeleccionado.especialidad">
-                    <button (click)="elegirEspecialidad(especialidad)">
-                        <img [src]="asignarImagen(especialidad)" alt="">
-                    </button>
-                </div>
+        <div *ngIf="pantalla > 0" class="contenedor-especialidades">
+            <div class="especialidad-item" *ngFor="let especialidad of especialistaSeleccionado.especialidad">
+              <h6>{{especialidad}}</h6>
+              <button (click)="elegirEspecialidad(especialidad)" class="especialidad-button"
+                [popover]="'Especialidad: ' + especialidad" triggers="mouseenter:mouseleave">
+                <img [src]="asignarImagen(especialidad)" alt="" class="especialidad-image">
+              </button>
             </div>
+          </div>
         </div>
-        <div *ngIf="boxFechaHorarios">
-            <p style="color:black;">Fechas-Horarios</p>
+        <div *ngIf="pantalla > 1" class="contendor-horarios"><br>
+          <h3>Turnos disponibles</h3>
+            <div *ngFor="let item of listaHorarios" class="contenedor-botones">
+                <button *ngFor="let hora of item.hora" class="horario-button" (click)="seleccionarHorario(formatearDia(item.dia),formatHora(hora))">
+                  {{ formatearDia(item.dia) }} {{ formatHora(hora) }}
+                </button>
+              </div>
+              <div class="contenedor-submit">
+                <p *ngIf="fechaTurnoSeleccionado != ''">TURNO ACTUAL: {{fechaTurnoSeleccionado}}</p>
+                <button class="boton-volver" (click)="popup = true">Pedir turno</button>
+              </div>
         </div>
-    </div>
+        <div id="contenedor-pop-up" class="pop-up" *ngIf="popup">
+          <div class="contenedor-imagen-popup">
+              <img class="imagen-cancelar" src="../../../assets/usuarios/cancelar.png" (click)="popup = false" alt="Boton cancelar">
+          </div>
+          <h4>¿Desea pedir solicitar este turno?</h4>
+          <p>*Debe esperar a que sea aceptado</p>
+          <span>ESPECIALISTA: {{especialistaSeleccionado.apellido}}, {{especialistaSeleccionado.nombre}}</span>
+          <span>ESPECIALIDAD: {{especialidadSeleccionada}}</span>
+          <span>FECHA: {{fechaTurnoSeleccionado}}</span>
+          <div class="botones-pop-up">
+            <button class="boton-pop-up" (click)="pedirTurno()" type="button">Aceptar</button>
+            <button class="boton-pop-up" (click)="popup = false" type="button">Cancelar</button>
+          </div>
+        </div>  
 </div>
 <div class="contenedor-spinner" *ngIf="spinner">
     <app-spinner id="spinner"></app-spinner>

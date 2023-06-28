@@ -1,0 +1,133 @@
+<div class="pantalla">
+    <div class="contenedor-tabla">
+        <div class="tabla">
+            <div class="encabezado-tabla">
+                <img class="logo" src="../../../assets/logoClinica.png" alt="">
+                    <h3>{{usuario?.perfil.toUpperCase()}}: {{usuario?.apellido}}, {{usuario?.nombre}}</h3>
+                    <div class="botonera">
+                        <label>Filtrar por:</label>
+                        <input *ngIf="usuario?.perfil == 'especialista'"
+                         type="text" [(ngModel)]="palabraFiltro"
+                        (keyup)="filtrarCampos()" placeholder="Filtrar por...">
+                        <input *ngIf="usuario?.perfil == 'paciente'"
+                         type="text" [(ngModel)]="palabraFiltro"
+                        (keyup)="filtrarCamposPaciente()" placeholder="Filtrar por...">
+                    </div>
+            </div>
+            <div class="seccion-tabla" *ngIf="usuario?.perfil == 'especialista'">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Paciente</th>
+                            <th>Especialidad</th>
+                            <th>Estado</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let turno of turnosFiltrados">
+                          <td>{{turno.fecha}}</td>
+                          <td>{{turno.paciente.apellido}}, {{turno.paciente.nombre}}</td>
+                          <td>{{turno.especialidad}}</td>
+                          <td><span>{{turno.estado}}</span></td>
+                          <td>
+                            <div class="botonera-acciones">
+                                <button (click)="accionCancelarEsp(turno)" *ngIf="turno.estado == 'solicitado'">
+                                    Cancelar</button>
+                                <button (click)="accionRechazar(turno)" *ngIf="turno.estado == 'solicitado'">
+                                    Rechazar</button>
+                                <button (click)="accionAceptar(turno)" *ngIf="turno.estado == 'solicitado'">
+                                    Aceptar</button>
+                                <button (click)="accionFinalizar(turno)" *ngIf="turno.estado == 'aceptado'">
+                                    Finalizar</button>
+                                <button *ngIf="turno.estado == 'finalizado' && turno.comentario"
+                                (click)="verResenia(turno)">Ver reseña</button>
+                            </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+          </div>
+          <!-- RECHAZAR/CANCELAR TURNO ESPECALISTA -->
+          <div id="contenedor-pop-up" class="pop-up" *ngIf="popupEspecialista">
+            <div class="contenedor-imagen-popup">
+                <img class="imagen-cancelar" src="../../../assets/usuarios/cancelar.png" (click)="popupEspecialista = false" alt="Boton cancelar">
+            </div>
+            <form [formGroup]="formAccion" (ngSubmit)="accionEspecialista()">
+                <h4>{{accion}}</h4>
+                <input type="text" formControlName="accionForm" placeholder="Detallar...">
+                <div class="contenedor-error">
+                    <small
+                    class="mensaje-error"
+                    *ngIf="
+                    formAccion.controls['accionForm'].errors?.['required'] &&
+                    formAccion.controls['accionForm'].touched">
+                    *Campo obligatorio
+                    </small>
+                </div>
+                <div class="botones-pop-up">
+                  <button class="boton-pop-up" type="submit">Aceptar</button>
+                  <button class="boton-pop-up" (click)="popupEspecialista = false" type="button">Cancelar</button>
+                </div>
+            </form>
+          </div>
+          <!-- ACEPTAR TURNO ESPECIALISTA -->
+          <div id="contenedor-pop-up" class="pop-up" *ngIf="popupEspecialistaAceptar">
+            <div class="contenedor-imagen-popup">
+                <img class="imagen-cancelar" src="../../../assets/usuarios/cancelar.png" (click)="popupEspecialistaAceptar = false" alt="Boton cancelar">
+            </div>
+                <h4>¿Desea aceptar a este paciente?</h4>
+                <div class="botones-pop-up">
+                  <button class="boton-pop-up" (click)="asignarDatosTurno('aceptado',2)" type="button">Aceptar</button>
+                  <button class="boton-pop-up" (click)="popupEspecialistaAceptar = false" type="button">Cancelar</button>
+                </div>
+          </div>
+          <div id="contenedor-pop-up" class="pop-up" *ngIf="popUpResenia">
+            <div class="contenedor-imagen-popup">
+                <img class="imagen-cancelar" src="../../../assets/usuarios/cancelar.png" (click)="popUpResenia = false" alt="Boton cancelar">
+            </div>
+                <h4>{{resenia}}</h4>
+                <div class="botones-pop-up">
+                  <button class="boton-pop-up" (click)="popUpResenia = false" type="button">Aceptar</button>
+                </div>
+          </div>
+          <!-- PACIENTEE -->
+          <div class="seccion-tabla" *ngIf="usuario?.perfil == 'paciente'">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Especialista</th>
+                        <th>Especialidad</th>
+                        <th>Estado</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let turno of turnosFiltrados">
+                      <td>{{turno.fecha}}</td>
+                      <td>{{turno.especialista.apellido}}, {{turno.especialista.nombre}}</td>
+                      <td>{{turno.especialidad}}</td>
+                      <td><span>{{turno.estado}}</span></td>
+                      <td>
+                        <div class="botonera-acciones">
+                            <button (click)="accionCancelarEsp(turno)" *ngIf="turno.estado == 'solicitado'">
+                                Cancelar</button>
+                            <button (click)="accionRechazar(turno)" *ngIf="turno.estado == 'solicitado'">
+                                Rechazar</button>
+                            <button (click)="accionAceptar(turno)" *ngIf="turno.estado == 'solicitado'">
+                                Aceptar</button>
+                            <button (click)="accionFinalizar(turno)" *ngIf="turno.estado == 'aceptado'">
+                                Finalizar</button>
+                            <button *ngIf="turno.estado == 'finalizado' && turno.comentario"
+                            (click)="verResenia(turno)">Ver reseña</button>
+                        </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+      </div>
+        </div>
+    </div>
+</div>

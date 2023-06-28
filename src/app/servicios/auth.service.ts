@@ -26,7 +26,7 @@ export class AuthService {
       this.angularFireAuth.signInWithEmailAndPassword(email, contraseña).then(async usuario => {
         resolve(usuario);
       })
-        .catch(error => rejected(error));
+      .catch(error => rejected(error));
     });
   } 
 
@@ -168,9 +168,25 @@ export class AuthService {
       .then(() => {
         console.log(`Usuario ${usuario.apellido} actualizado`);
       })
-    
       .catch((error) => {
         console.log("Error al actualizar usuario");
       });
+  }
+
+  obtenerListaTurnos()
+  {
+    const collection = this.angularFirestore.collection<any>('turnos');
+    return collection.valueChanges();
+  }
+
+  actualizarListaTurnos(turno:any)
+  {
+    this.angularFirestore
+    .doc<any>(`turnos/${turno.id}`)
+    .update(turno)
+    .then(() => {})
+    .catch((error) => {
+      console.log(error.message);
+    });
   }
 }

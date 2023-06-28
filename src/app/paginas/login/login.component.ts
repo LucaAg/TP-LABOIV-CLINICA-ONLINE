@@ -53,7 +53,6 @@ export class LoginComponent {
   cargarUsuarios()
   {
     this.firebaseServi.obtenerUsuarios().subscribe((res)=>{
-      console.log(res);
       
       res.forEach(usuario => {
      if(this.listaUsuarios.find((u:any) => u.id === usuario.id) === undefined)
@@ -68,7 +67,7 @@ export class LoginComponent {
          this.listaUsuarios.push(usuario);
          this.contadorEspecialistas++;
        }
-       else if(usuario.perfil == "paciente" && this.contadorEspecialistas < 3)
+       else if(usuario.perfil == "paciente" && this.contadorPacientes < 3)
        {
          this.listaUsuarios.push(usuario);
          this.contadorPacientes++;
@@ -76,7 +75,6 @@ export class LoginComponent {
       
      }
      });  
-      console.log(this.listaUsuarios);
     });
   }
   
@@ -97,18 +95,18 @@ export class LoginComponent {
       let verificacion:string = "";
       try {
         await this.auth.iniciarSesion(this.email, this.contraseña).then(async(datos:any)=>{
-        await this.obtenerDatosUsuario().then((usuario)=>{
-          verificacion = this.verificarUsuario(datos,usuario);
-            if (verificacion != "verificado") {
-              this.auth.cerrarSesion();
-              this.sweetServ.mensajeError(verificacion, "Iniciar sesión");
-            } else {
-              this.auth.setLogueado();
-              this.sweetServ.mensajeExitoso(verificacion, "Iniciar sesión");
-              this.router.navigate(['bienvenida']);
-            }          
-        });
-        });       
+            await this.obtenerDatosUsuario().then((usuario)=>{
+              verificacion = this.verificarUsuario(datos,usuario);
+                if (verificacion != "verificado") {
+                  this.auth.cerrarSesion();
+                  this.sweetServ.mensajeError(verificacion, "Iniciar sesión");
+                } else {
+                  this.auth.setLogueado();
+                  this.sweetServ.mensajeExitoso("Inicio de sesión exitoso.", "Iniciar sesión");
+                  this.router.navigate(['bienvenida']);
+                }          
+            });
+          });       
         } catch (error) {
         console.log(error);
         this.sweetServ.mensajeError("Error al iniciar sesión", "Iniciar sesión");

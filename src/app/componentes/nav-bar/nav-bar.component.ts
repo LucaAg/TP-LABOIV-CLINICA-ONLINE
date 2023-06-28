@@ -13,7 +13,7 @@ export class NavBarComponent {
   menu:any;
   navbar:any;
   usuarioLogueado=new Usuario();
-  spinner:any;
+  spinner:boolean = false;
   constructor(public authService:AuthService,
     private router: Router,
     private sweetServi:SweetService){
@@ -22,8 +22,8 @@ export class NavBarComponent {
 
   cerrarSesion()
   {
-    this. activarSpinner();
     this.authService.cerrarSesion();
+    //this. activarSpinner();
     this.sweetServi.mensajeExitoso("Se ha cerrado exitosamente la sesión","Cerrar sesión");
 
     this.router.navigate(['bienvenida']);
@@ -31,9 +31,9 @@ export class NavBarComponent {
 
   activarSpinner()
   {
-    this.spinner.classList.remove('esconder');
+    this.spinner = true;
     setTimeout(()=>{
-      this.spinner.classList.add('esconder');
+      this.spinner = false;
     },2500);
   }
 
@@ -41,7 +41,6 @@ export class NavBarComponent {
   {
     this.menu = document.getElementById('icono-menu');
     this.navbar = document.querySelector('.navbar');
-    this.spinner = document.getElementById('spinner');
     this.authService.obtenerUsuarioIniciado().subscribe((usuario: any) => {
       if(usuario)
       {

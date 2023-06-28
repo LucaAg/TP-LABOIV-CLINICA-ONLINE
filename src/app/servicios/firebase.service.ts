@@ -25,6 +25,29 @@ export class FirebaseService {
     .where('aprobado', '==', true)).valueChanges();  
   }
 
+  actualizarTurno(turno:any)
+  {
+    this.angularFirestore.collection('turnos', ref =>
+    ref.where('id', '==', turno.id)
+  )
+  .get()
+  .subscribe(snapshot => {
+    if (snapshot.size === 1) {
+      const turnoDoc = snapshot.docs[0];
+
+      turnoDoc.ref.update(turno)
+        .then(() => {
+          console.log('Turno actualizado exitosamente');
+        })
+        .catch((error) => {
+          console.error('Error al actualizar el turno:', error);
+        });
+    } else {
+      console.error('No se encontró un único documento que cumpla con los criterios especificados');
+    }
+  });
+  }
+
   async agregarDocumento(nombreColeccion:string,datos:any)
   {
     return this.angularFirestore.collection(nombreColeccion).add(datos);
@@ -33,6 +56,12 @@ export class FirebaseService {
   obtenerUsuarios()
   {
     const coleccion = this.angularFirestore.collection<any>('usuarios');
+    return coleccion.valueChanges();
+  }
+
+  obtenerTurnos()
+  {
+    const coleccion = this.angularFirestore.collection<any>('turnos');
     return coleccion.valueChanges();
   }
 }

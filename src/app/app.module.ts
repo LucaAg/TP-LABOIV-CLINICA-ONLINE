@@ -25,6 +25,7 @@ import { PopoverModule } from 'ngx-bootstrap/popover';
 import { TurnosComponent } from './paginas/turnos/turnos.component';
 import { SolicitarTurnoComponent } from './paginas/solicitar-turno/solicitar-turno.component';
 import { MiPerfilComponent } from './paginas/mi-perfil/mi-perfil.component';
+import { MisTurnosComponent } from './paginas/mis-turnos/mis-turnos.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { MiPerfilComponent } from './paginas/mi-perfil/mi-perfil.component';
     FormRegistroAdminComponent,
     TurnosComponent,
     SolicitarTurnoComponent,
-    MiPerfilComponent
+    MiPerfilComponent,
+    MisTurnosComponent
   ],
   imports: [
     BrowserModule,

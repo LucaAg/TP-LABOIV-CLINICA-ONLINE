@@ -4,6 +4,7 @@ import { FirebaseService } from 'src/app/servicios/firebase.service';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { AuthService } from 'src/app/servicios/auth.service';
 import { Paciente } from 'src/app/models/paciente';
+import { SweetService } from 'src/app/servicios/sweet.service';
 
 @Component({
   selector: 'app-form-registro-paciente',
@@ -17,11 +18,17 @@ export class FormRegistroPacienteComponent {
   patternContraseña:string=".{6,}";
   spinner:boolean = false;
   box:any;
+
+  archivo1:string ="";
+  ruta1:string = "";
+
+  archivo2:string = "";
+  ruta2:string = "";
   private emailPattern: any = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
   constructor(private formBuilder:FormBuilder,
     private servicioFire:FirebaseService,private angularFireStorage: AngularFireStorage,
-    private auth:AuthService)
+    private auth:AuthService,private sweetServ:SweetService)
   {
     this.formPaciente = this.formBuilder.group({
       nombre: ['', [Validators.required]],
@@ -51,10 +58,12 @@ export class FormRegistroPacienteComponent {
     },3000);
   }
 
-  registrarPaciente()
+  async registrarPaciente()
   {
     if(this.formPaciente.valid)
     {
+      await this.subirImagen();
+      await this.subirImagen2();
       if(this.nuevoPaciente.imagen1 != '' && this.nuevoPaciente.imagen2 != '')
       {
         this.nuevoPaciente.nombre = this.formPaciente.getRawValue().nombre;
@@ -70,31 +79,58 @@ export class FormRegistroPacienteComponent {
         setTimeout(()=>{
           this.formPaciente.reset();
           this.nuevoPaciente = new Paciente();
-        },2000);       
+        },2000);     
+        this.sweetServ.mensajeExitoso("Se ha creado al paciente exitosamente.","Registro");  
       }
+      else
+      {
+        this.sweetServ.mensajeError("Debe cargar ambas imagenes.","Imagén");  
+      }
+    }
+    else
+    {
+      this.sweetServ.mensajeError("Todos los campos son obligatorios, por favor reviselos.","Campos");  
+
     }
   }
 
-  async cargarImagen($event: any) {
-    const archivo = $event.target.files[0];
-    const ruta = 'img ' + Date.now() + Math.random() * 10;
-    const referencia = this.angularFireStorage.ref(ruta);
-    await referencia.put(archivo).then(async () => {
-      referencia.getDownloadURL().subscribe((urlImg) => {
-        this.nuevoPaciente.imagen1 = urlImg;
+
+  cargarImagen($event: any) {
+    this.archivo1 = $event.target.files[0];
+    this.ruta1 = 'img ' + Date.now() + Math.random() * 10;
+   
+  }
+
+  async subirImagen()
+  {
+    return new Promise(async (resolve,rejected)=>{
+      const referencia = this.angularFireStorage.ref(this.ruta1);
+      await referencia.put(this.archivo1).then(async () => {
+        referencia.getDownloadURL().subscribe((urlImg) => {
+          this.nuevoPaciente.imagen1 = urlImg;
+          resolve(urlImg);
+        });
       });
     });
   }
 
   async cargarImagen2($event: any) {
-    const archivo = $event.target.files[0];
-    const ruta = 'img ' + Date.now() + Math.random() * 10;
-    const referencia = this.angularFireStorage.ref(ruta);
-    await referencia.put(archivo).then(async () => {
-      referencia.getDownloadURL().subscribe((urlImg) => {
-        this.nuevoPaciente.imagen2 = urlImg;
+    this.archivo2 = $event.target.files[0];
+    this.ruta2 = 'img ' + Date.now() + Math.random() * 10;
+    
+  }
+
+  async subirImagen2()
+  {
+    return new Promise(async (resolve,rejected)=>{
+      const referencia = this.angularFireStorage.ref(this.ruta2);
+      await referencia.put(this.archivo2).then(async () => {
+        referencia.getDownloadURL().subscribe((urlImg) => {
+          this.nuevoPaciente.imagen2 = urlImg;
+          resolve(urlImg);
+        });
       });
-    });
+   });
   }
 }
 

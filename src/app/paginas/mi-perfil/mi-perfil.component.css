@@ -8,52 +8,64 @@
 
 .pantalla {
     position: relative;
-    overflow: hidden; /* Asegura que el desenfoque no se desborde */
     min-height: 100vh;
     display: flex;
+    overflow-y:scroll;
     justify-content: space-evenly;
+    background-image: url('../../../assets/registro/fondo.jpg');
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
     align-items: center;
     flex-direction: row;
     flex-wrap: wrap;
-}
-
-.pantalla::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: url('../../../assets/perfil/fondPerfil.png');
-    background-repeat: no-repeat;
-    background-size: 100% 100vh;
-    background-attachment: fixed;
-    background-position: center;
-    filter: blur(8px);
-    z-index: -1; /* Envía el pseudo-elemento al fondo */
 }
 
 
 .pantalla .box 
 {
     position: absolute;
-    width: 50%;
-    height: 80%;
+    width: 70%;
     background: rgba(112, 112, 155, 0.2);
-    margin: 0 auto;
-    margin-top: 5rem;
     padding: 2%;
-    color: rgba(252, 255, 253, 0.527);
+    margin-top: 55vh;
+    color: rgb(0, 0, 0);
     font-weight: bold;
     text-align: center;
     border-radius: 0.938rem;
     border-color: #009aa5;
     border-style: double;
-    flex-shrink: 0;
     cursor: pointer;
     transition: background-color 0.3s, box-shadow 0.3s;
     backdrop-filter: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
+
+.pantalla .box2
+{
+    position: absolute;
+    width: 70%;
+    background: rgba(112, 112, 155, 0.2);
+    padding: 2%;
+    color: rgb(0, 0, 0);
+    font-weight: bold;
+    text-align: center;
+    border-radius: 0.938rem;
+    border-color: #009aa5;
+    border-style: double;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    backdrop-filter: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
 
 .pantalla .box h1
 {
@@ -63,23 +75,53 @@
 .pantalla .box .contenedor-info
 {
     width: 100%;
-    height: 80%;
     display: flex;
     justify-content: center;
     align-self: center;
     flex-direction: column;
 }
 
-.pantalla .box .contenedor-labels
+.info-fundamental
 {
     width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-direction: row;
+    border: 2px solid #03e5f5;
+    border-radius: 10px;
+}
+
+.pantalla .box .info-fundamental .contenedor-labels1
+{
+    width: 40%;
+    height: 20%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.pantalla .box .info-fundamental .contenedor-labels2
+{
+    
+    width: 60%;
     height: 15%;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
+    flex-direction: column;
+    margin-left: 40px;
 }
 
-.pantalla .box .contenedor-info div img
+.pantalla .box .info-fundamental .contenedor-labels2 label,
+.pantalla .box .info-fundamental .contenedor-labels1 label
+{
+    padding: 8px;
+}
+
+img
 {
     width: 80px;
     border: 1px solid black;
@@ -95,7 +137,91 @@
     align-items: center;
 }
 
+button
+{
+    background-color: #03e5f5;
+    border-radius: 10px;
+    color: black;
+    font-weight: bold;
+}
 
-label{
+.btn-diaNegado
+{
+    background-color: grey;
+}
+
+.contenedor-button
+{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+
+.contenedor-labels
+{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+
+
+h4, h2{
     color:black;
+}
+
+table
+{
+    width: 100%;
+    table-layout: fixed;
+}
+
+thead th
+{
+    position: sticky;
+    top: 0;
+    background-color: #cacdd1;
+    color: #020508;
+    font-size: 0.838rem;
+}
+
+th,td{
+    border-bottom: 0.063rem solid #dddddd;
+    padding: 0.225rem 0.5rem;
+    word-break: break-all;
+    text-align: center;
+}
+
+.input-turno
+{
+    width: 20%;
+    text-align: center;
+    background-color: rgb(166, 234, 243);
+    border-radius: 10px;
+}
+
+
+.contenedor-imagenes
+{
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+
+
+.contenedor-info-fundamental
+{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.contenedor-info-fundamental h5
+{
+    padding: 5px;
 }

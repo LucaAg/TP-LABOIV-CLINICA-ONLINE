@@ -99,7 +99,8 @@ export class FormRegistroComponent {
         this.nuevoEspecialista.perfil = "especialista";
         this.nuevoEspecialista.especialidad = this.obtenerEspecialidadesUsuario();
         this.nuevaEspecialidad.especialidad = this.formAgregarEspecialista.getRawValue().nuevaEspecialidad;
-        
+        this.nuevoEspecialista.duracionTurno = 30;
+        this.nuevoEspecialista.disponibilidad = []=[];
         this.auth.registrarEspecialista(this.nuevoEspecialista);
         this.activarSpinner();
         setTimeout(()=>{
