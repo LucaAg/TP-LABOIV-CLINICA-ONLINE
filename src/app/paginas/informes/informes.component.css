@@ -111,13 +111,12 @@
 /* TABLA */
 .contenedor-tabla
 {
-    margin-top: 10vh;
     width: 80%;
-    height: 80%;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    height: 500px;
 }
 
 .tabla
@@ -125,6 +124,7 @@
     width: 100%;
     background-color: rgb(102, 103, 104);
     color:white;
+   
 }
 
 .encabezado-tabla
@@ -193,7 +193,8 @@ input
 }
 .seccion-tabla
 {
-    overflow: auto;
+    overflow-y: scroll;
+    max-height: 400px;
 }
 
 
