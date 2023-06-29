@@ -32,7 +32,9 @@
                           <td>{{turno.paciente.obraSocial}}</td>
                           <td>{{turno.estado}}</td>
                           <td><button *ngIf="turno.estado == 'solicitado'"
-                            (click)="obtenerTurnoRechazo(turno)">Cancelar</button></td>
+                            (click)="obtenerTurnoRechazo(turno)">Cancelar</button>
+                        </td>
+                            
                         </tr>
                     
                     </tbody>

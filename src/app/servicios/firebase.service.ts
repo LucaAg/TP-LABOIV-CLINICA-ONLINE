@@ -64,4 +64,10 @@ export class FirebaseService {
     const coleccion = this.angularFirestore.collection<any>('turnos');
     return coleccion.valueChanges();
   }
+
+  obtenerHistoriasClinicas()
+  {
+    const coleccion = this.angularFirestore.collection<any>('historiales-clinicos');
+    return coleccion.valueChanges();
+  }
 }

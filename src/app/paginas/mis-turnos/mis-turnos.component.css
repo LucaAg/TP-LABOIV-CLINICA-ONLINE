@@ -106,6 +106,7 @@ input
 table
 {    table-layout: fixed;
     min-width: 69.25rem;
+    overflow-y: scroll;
 }
 
 .logo

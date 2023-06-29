@@ -92,13 +92,13 @@ export class AuthService {
         imagen1: nuevoEspecialista.imagen1,
         aprobado: nuevoEspecialista.aprobado,
       }).then(()=>{
-        console.log("Registro exitoso!");
+        this.sweetServi.mensajeExitoso("Registro existoso!","registro");
       }).catch((error)=>{
-        console.log(error.code);
+        this.sweetServi.mensajeError(this.createMessage(error.code),"Error");
       })
     })
     .catch((error)=>{
-      console.log(error.code);
+      this.sweetServi.mensajeError(this.createMessage(error.code),"Error");
     });
   }
 
@@ -122,14 +122,14 @@ export class AuthService {
         imagen1: nuevoPaciente.imagen1,
         imagen2: nuevoPaciente.imagen2,
       }).then(()=>{
-        console.log("Registro exitoso!");
+        this.sweetServi.mensajeExitoso("Registro existoso!","registro");
         this.router.navigate(['']);
       }).catch((error)=>{
-        console.log(error.code);
+        this.sweetServi.mensajeError(this.createMessage(error.code),"Error");
       })
     })
     .catch((error)=>{
-      console.log(error.code);
+      this.sweetServi.mensajeError(this.createMessage(error.code),"Error");
     });
   }
 
@@ -151,13 +151,13 @@ export class AuthService {
         imagen1: nuevoAdmin.imagen1,
         esAdmin: true,
       }).then(()=>{
-        console.log("Registro exitoso!");
+        this.sweetServi.mensajeExitoso("Registro existoso!","registro");
       }).catch((error)=>{
-        console.log(error.code);
+        this.sweetServi.mensajeError(this.createMessage(error.code),"Error");
       })
     })
     .catch((error)=>{
-      console.log(error.code);
+      this.sweetServi.mensajeError(this.createMessage(error.code),"Error");
     });
   }
 
@@ -189,4 +189,30 @@ export class AuthService {
       console.log(error.message);
     });
   }
+
+  private createMessage(errorCode: string): string {
+    let message: string = '';
+    switch (errorCode) {
+      case 'auth/internal-error':
+        message = 'Los campos estan vacios';
+        break;
+      case 'auth/operation-not-allowed':
+        message = 'La operación no está permitida.';
+        break;
+      case 'auth/email-already-in-use':
+        message = 'El email ya está registrado.';
+        break;
+      case 'auth/invalid-email':
+        message = 'El email no es valido.';
+        break;
+      case 'auth/weak-password':
+        message = 'La contraseña debe tener al menos 6 caracteres';
+        break;
+      default:
+        message = 'Error al crear el usuario.';
+        break;
+    }
+
+    return message;
+  } 
 }

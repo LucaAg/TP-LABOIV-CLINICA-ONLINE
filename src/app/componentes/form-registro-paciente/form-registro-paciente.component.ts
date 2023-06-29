@@ -18,6 +18,7 @@ export class FormRegistroPacienteComponent {
   patternContraseña:string=".{6,}";
   spinner:boolean = false;
   box:any;
+  captcha: string = '';
 
   archivo1:string ="";
   ruta1:string = "";
@@ -38,10 +39,12 @@ export class FormRegistroPacienteComponent {
       obraSocial: ['', [Validators.required]],
       email: ['', [Validators.required,Validators.pattern(this.emailPattern)]],
       clave: ['', [Validators.required,Validators.pattern(this.patternContraseña)]],
+      captcha: ['', [Validators.required]],
       imagen: ['', [Validators.required]],
       imagen2: ['', [Validators.required]],
     });
     this.activarSpinner();
+    this.captcha = this.crearStringRandom(6);
 
   }
 
@@ -49,6 +52,20 @@ export class FormRegistroPacienteComponent {
   {
     this.box = document.getElementById('box');
   }
+
+  crearStringRandom(cantidad: number) {
+    const caracteres =
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let retorno = ' ';
+    const length = caracteres.length;
+    for (let i = 0; i < cantidad; i++) {
+      retorno += caracteres.charAt(
+        Math.floor(Math.random() * length)
+      );
+    }
+    return retorno;
+  }
+
 
   activarSpinner()
   {
@@ -62,29 +79,38 @@ export class FormRegistroPacienteComponent {
   {
     if(this.formPaciente.valid)
     {
-      await this.subirImagen();
-      await this.subirImagen2();
-      if(this.nuevoPaciente.imagen1 != '' && this.nuevoPaciente.imagen2 != '')
+      if( this.captcha.toLocaleLowerCase().trim() ==
+      this.formPaciente.getRawValue().captcha.toLocaleLowerCase().trim())
       {
-        this.nuevoPaciente.nombre = this.formPaciente.getRawValue().nombre;
-        this.nuevoPaciente.apellido = this.formPaciente.getRawValue().apellido;
-        this.nuevoPaciente.edad = this.formPaciente.getRawValue().edad;
-        this.nuevoPaciente.dni = this.formPaciente.getRawValue().dni;
-        this.nuevoPaciente.obraSocial = this.formPaciente.getRawValue().obraSocial;
-        this.nuevoPaciente.email = this.formPaciente.getRawValue().email;
-        this.nuevoPaciente.clave = this.formPaciente.getRawValue().clave;
-        this.nuevoPaciente.perfil = 'paciente';
-        this.auth.registrarPaciente(this.nuevoPaciente);
-        this.activarSpinner();
-        setTimeout(()=>{
-          this.formPaciente.reset();
-          this.nuevoPaciente = new Paciente();
-        },2000);     
-        this.sweetServ.mensajeExitoso("Se ha creado al paciente exitosamente.","Registro");  
+        await this.subirImagen();
+        await this.subirImagen2();
+        if(this.nuevoPaciente.imagen1 != '' && this.nuevoPaciente.imagen2 != '')
+        {
+  
+            this.nuevoPaciente.nombre = this.formPaciente.getRawValue().nombre;
+            this.nuevoPaciente.apellido = this.formPaciente.getRawValue().apellido;
+            this.nuevoPaciente.edad = this.formPaciente.getRawValue().edad;
+            this.nuevoPaciente.dni = this.formPaciente.getRawValue().dni;
+            this.nuevoPaciente.obraSocial = this.formPaciente.getRawValue().obraSocial;
+            this.nuevoPaciente.email = this.formPaciente.getRawValue().email;
+            this.nuevoPaciente.clave = this.formPaciente.getRawValue().clave;
+            this.nuevoPaciente.perfil = 'paciente';
+            this.auth.registrarPaciente(this.nuevoPaciente);
+            this.activarSpinner();
+            setTimeout(()=>{
+              this.formPaciente.reset();
+              this.nuevoPaciente = new Paciente();
+            },1000);     
+            this.sweetServ.mensajeExitoso("Se ha creado al paciente exitosamente.","Registro");  
+        }
+        else
+        {
+          this.sweetServ.mensajeError("Debe cargar ambas imagenes.","Imagén");  
+        }
       }
       else
       {
-        this.sweetServ.mensajeError("Debe cargar ambas imagenes.","Imagén");  
+       this.sweetServ.mensajeError("Captcha incorrecto, ¿Es usted un robot?","Captcha");
       }
     }
     else

@@ -120,6 +120,18 @@
             *La imagen es obligatoria
         </small>
         </div>
+        <div class="contenedor-captcha">
+          <div class="captcha"> 
+            <p>{{captcha | mayuscula}}</p>
+          </div>
+          <input type="text" formControlName="captcha" placeholder="CAPTCHA">
+          <small class="mensaje-error"
+          *ngIf="
+                formEspecialista.controls['captcha'].errors?.['required'] &&
+                formEspecialista.controls['captcha'].touched">
+                *El Captcha es requerido
+          </small>
+        </div>
         <div class="contendor-boton">
           <button type="submit">Registrar especialista</button>
         </div>

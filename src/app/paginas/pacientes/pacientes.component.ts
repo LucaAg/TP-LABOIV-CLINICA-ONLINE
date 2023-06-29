@@ -8,9 +8,13 @@ import { FirebaseService } from 'src/app/servicios/firebase.service';
   styleUrls: ['./pacientes.component.css']
 })
 export class PacientesComponent {
+  historialPorPaciente:any = new Array();
   listaPacientes:any = new Array();
   usuariosPorEspecialista:any = new Array();
+  historial:boolean = false;
   especialista:any;
+  listaHistoriasCLinicasPorEspecialista:any = new Array();
+  pacientesCount: { [paciente: string]: { count: number; fechas: string[] } } = {};
   constructor(private authServ:AuthService,
     private fireServ:FirebaseService)
   {
@@ -22,22 +26,74 @@ export class PacientesComponent {
     this.authServ.obtenerUsuarioIniciado().subscribe((usuario)=>{
       this.especialista = usuario;
       console.log(usuario);
-      this.cargarPacientes();
+      this.listaHistoriasCLinicasPorEspecialista = [];
+      this.fireServ.obtenerHistoriasClinicas().subscribe((historiasCli)=>{
+        for (let i = 0; i < historiasCli.length; i++) {
+          if(historiasCli[i].especialista.id == this.especialista.id)
+          {
+            this.listaHistoriasCLinicasPorEspecialista.push(historiasCli[i]);
+          }
+        }
+        console.log(this.listaHistoriasCLinicasPorEspecialista);
+        this.obtenerConteoPacientes();
+        this.filtrarHistoriasClinicas();
+      });
     })
   }
 
-  cargarPacientes()
+  obtenerConteoPacientes(): void {
+    this.pacientesCount = {};
+    for (const historia of this.listaHistoriasCLinicasPorEspecialista) {
+      const paciente = historia.paciente;
+      const fecha = historia.fechaTurno;
+
+      if (paciente.id in this.pacientesCount) {
+        this.pacientesCount[paciente.id].count++;
+        if (this.pacientesCount[paciente.id].fechas.length < 3) {
+          this.pacientesCount[paciente.id].fechas.push(fecha);
+        }
+      } else {
+        this.pacientesCount[paciente.id] = { count: 1, fechas: [fecha] };
+      }
+    }
+  }
+
+  obtenerFechasPaciente(pacienteInfo: { count: number; fechas: string[]; }): string {
+    const fechas = pacienteInfo.fechas.sort((a, b) => new Date(b).getTime() - new Date(a).getTime());
+    return fechas.length > 0 ? fechas.join('<br> ') : 'No hay fechas disponibles';
+  }
+
+  filtrarHistoriasClinicas(): void {
+    this.listaPacientes = [];
+    const pacientesSet = new Set<string>();
+    for (const historia of this.listaHistoriasCLinicasPorEspecialista) {
+      const paciente = historia.paciente;
+
+      if (!pacientesSet.has(paciente.id)) {
+        pacientesSet.add(paciente.id);
+        this.listaPacientes.push(paciente);
+      }
+    }
+
+    console.log(this.listaPacientes);
+  }
+
+  verHistorial(paciente:any)
   {
-    this.fireServ.obtenerTurnos().subscribe((turnos)=>{
-      this.listaPacientes = [];
-      for (let i = 0; i < turnos.length; i++) 
+    this.historial = true;
+    this.obtenerHistorialPorPaciente(paciente);
+  }
+
+  obtenerHistorialPorPaciente(paciente:any)
+  {
+    this.historialPorPaciente = [];
+    console.log(this.listaHistoriasCLinicasPorEspecialista);
+    for (let i = 0; i < this.listaHistoriasCLinicasPorEspecialista.length; i++) {
+      if(this.listaHistoriasCLinicasPorEspecialista[i].paciente.id == paciente.id)
       {
-          if(this.especialista.id == turnos[i].especialista.id)
-          {
-            this.listaPacientes.push(turnos[i].paciente);
-          }
-        }  
-      console.log(this.listaPacientes);
-    });
+        this.historialPorPaciente.push(this.listaHistoriasCLinicasPorEspecialista[i]);
+      }
+    }
+    console.log(this.historialPorPaciente);
   }
 }

@@ -102,7 +102,14 @@ export class MisTurnosComponent {
         const turno = this.listaTurnos[i];
         if(turno.especialidad.toLocaleLowerCase() == this.palabraFiltro.toLocaleLowerCase()
         || turno.paciente.apellido.toLocaleLowerCase() == this.palabraFiltro.toLocaleLowerCase() ||
-        turno.paciente.nombre.toLocaleLowerCase() == this.palabraFiltro.toLocaleLowerCase())  
+        turno.paciente.nombre.toLocaleLowerCase() == this.palabraFiltro.toLocaleLowerCase() ||
+        turno.estado.toLocaleLowerCase() == this.palabraFiltro.toLocaleLowerCase() ||
+        turno.paciente.obraSocial.toLocaleLowerCase() == this.palabraFiltro.toLocaleLowerCase() ||
+        turno.especialista.apellido.toLocaleLowerCase() == this.palabraFiltro.toLocaleLowerCase() ||
+        turno.especialista.nombre.toLocaleLowerCase() == this.palabraFiltro.toLocaleLowerCase() ||
+        turno.altura.toString().includes(busqueda) || turno.peso.toString().includes(busqueda) ||
+        turno.presion.toString().includes(busqueda) || turno.temperatura.toString().includes(busqueda) ||
+        turno.fecha.includes(this.palabraFiltro.toLocaleLowerCase()) )  
         {
           this.turnosFiltrados.push(turno);
         }   
@@ -125,8 +132,15 @@ export class MisTurnosComponent {
       for (let i = 0; i < this.listaTurnos.length; i++) {
         const turno = this.listaTurnos[i];
         if(turno.especialidad.toLocaleLowerCase() == this.palabraFiltro.toLocaleLowerCase()
-        || turno.especialista.apellido.toLocaleLowerCase() == this.palabraFiltro.toLocaleLowerCase() ||
-        turno.especialista.nombre.toLocaleLowerCase() == this.palabraFiltro.toLocaleLowerCase())  
+        || turno.paciente.apellido.toLocaleLowerCase() == this.palabraFiltro.toLocaleLowerCase() ||
+        turno.paciente.nombre.toLocaleLowerCase() == this.palabraFiltro.toLocaleLowerCase() ||
+        turno.estado.toLocaleLowerCase() == this.palabraFiltro.toLocaleLowerCase() ||
+        turno.paciente.obraSocial.toLocaleLowerCase() == this.palabraFiltro.toLocaleLowerCase() ||
+        turno.especialista.apellido.toLocaleLowerCase() == this.palabraFiltro.toLocaleLowerCase() ||
+        turno.especialista.nombre.toLocaleLowerCase() == this.palabraFiltro.toLocaleLowerCase() ||
+        turno.altura.toString().includes(busqueda) || turno.peso.toString().includes(busqueda) ||
+        turno.presion.toString().includes(busqueda) || turno.temperatura.toString().includes(busqueda) ||
+        turno.fecha.includes(this.palabraFiltro.toLocaleLowerCase()))   
         {
           this.turnosFiltrados.push(turno);
         }   
@@ -260,6 +274,7 @@ export class MisTurnosComponent {
       e.paciente = this.turnoEspActualizar.paciente;
       e.especialista = this.turnoEspActualizar.especialista;
       e.especialidad = this.turnoEspActualizar.especialidad;
+      e.fechaTurno = this.turnoEspActualizar.fecha;
       console.log(e);
       this.fireServ.agregarDocumento('historiales-clinicos',e);
       this.sweetServ.mensajeExitoso('Historial clínico agregado correctamente','Historial clínico');

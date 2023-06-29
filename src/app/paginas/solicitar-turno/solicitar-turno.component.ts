@@ -32,7 +32,7 @@ export class SolicitarTurnoComponent {
   {
     this.auth.obtenerUsuarioIniciado().subscribe((usuario)=>{
       this.paciente = usuario;
-      if(this.paciente.perfil == 'admin')
+      if(this.paciente?.perfil == 'admin')
       {
         this.admin = this.paciente;
         this.pantalla = 0;
@@ -121,7 +121,6 @@ export class SolicitarTurnoComponent {
       for (let i = 0; i < this.especialistaSeleccionado.disponibilidad.length; i++) {
         if(this.especialistaSeleccionado.disponibilidad[i].especialidad == this.especialidadSeleccionada)
         {
-          console.log(this.especialistaSeleccionado.disponibilidad[i]);
           this.listaHorarios = this.especialistaSeleccionado.disponibilidad[i].horarios;
           break;
         }
@@ -140,9 +139,8 @@ export class SolicitarTurnoComponent {
       for (let k = 0; k < listaHorarios.length; k++) {
         for (let j = 0; j < arrayAux[k].hora.length; j++) {
           const fechaHorario = this.formatearDia(arrayAux[k].dia)+ ' ' + this.formatHora(arrayAux[k].hora[j]);
-          if(fechaHorario == fechaTurno)
+          if(fechaHorario == fechaTurno && this.especialistaSeleccionado.id == this.listaTurnos[i].especialista.id)
           {
-            console.log(this.listaTurnos[i].estado);
             if(this.listaTurnos[i].estado != 'rechazado' &&
             this.listaTurnos[i].estado != 'cancelado')
             {
@@ -174,6 +172,7 @@ export class SolicitarTurnoComponent {
     {
       this.pantalla = 1;
     }
+    this.fechaTurnoSeleccionado = '';
     this.popup = false;
   }
   

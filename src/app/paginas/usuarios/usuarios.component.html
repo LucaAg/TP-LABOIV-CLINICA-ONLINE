@@ -5,33 +5,22 @@
                 <img class="logo" src="../../../assets/logoClinica.png" alt="">
                 <h3>Usuarios</h3>
                 <div class="botonera">
-                    <button (click)="generarExcel()" class="agregar-usuario">Generar Excel</button>
                     <button (click)="abrirPopUp()" class="agregar-usuario">Registrar usuario</button>
                 </div>
             </div>
-            <div class="seccion-tabla">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Imagen</th>
-                            <th>Nombre</th>
-                            <th>Apellido</th>
-                            <th>Perfil</th>
-                            <th>Habilitar</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let usuario of listaUsuarios">
-                            <td><img loading="lazy" [src]=usuario.imagen1 alt="Imagen usuario"></td>
-                            <td>{{usuario.nombre}}</td>
-                            <td>{{usuario.apellido}}</td>
-                            <td>{{usuario.perfil}}</td>
-                            <td><input *ngIf="usuario.perfil == 'especialista'" type="checkbox" 
-                                (click)="cambiarEstadoHabilitacion(usuario,$event)" [(ngModel)]="usuario.aprobado"></td>
-                        </tr>
-                    
-                    </tbody>
-                </table>
+            <div class="contenedor-cards">
+                <div class="card" *ngFor="let usuario of listaUsuarios" (click)="descargarExcel(usuario)">
+                    <img loading="lazy" [src]=usuario.imagen1 alt="Imagen usuario">
+                    <div class="info-user">
+                        <p>NOMBRE: {{usuario.nombre}}</p>
+                        <p>APELLIDO: {{usuario.apellido}}</p>
+                        <p>PERFIL: {{usuario.perfil}}</p>
+                        <p *ngIf="usuario.perfil == 'especialista'">ACCIÓN:<input  type="checkbox" 
+                            (click)="cambiarEstadoHabilitacion(usuario,$event)" [(ngModel)]="usuario.aprobado"></p>
+                            <button (click)="verHistorial(usuario)" class="button-historial" *ngIf="usuario.perfil =='paciente'">Ver historial</button>
+                        
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -48,6 +37,29 @@
       <div id="registro" class="esconder form-registro">
         <app-form-registro-admin (registroCompletado)="registroAdminCompletado()"></app-form-registro-admin>
       </div>
+
+      <div class="contenedor-historial" *ngIf="historial">
+        <div class="header-historial">
+            <h1>Historia clínica</h1>
+            <button (click)="historial = false;">Salir</button>
+        </div>
+          <div class="contenedor-datos" *ngFor="let historial of historialPorPaciente">
+            <h4>Historial Clínico</h4>
+            <ul>
+              <li><strong>Fecha:</strong> {{ historial.fechaTurno }}</li>
+              <li><strong>Paciente:</strong> {{ historial.paciente.apellido }}, {{ historial.paciente.nombre }}</li>
+              <li><strong>Especialista:</strong> {{ historial.especialista.apellido }}</li>
+              <li><strong>Peso:</strong> {{ historial.peso }}</li>
+              <li><strong>Temperatura:</strong> {{ historial.temperatura }}</li>
+              <li><strong>Presión:</strong> {{ historial.presion }}</li>
+              <li><strong>Altura:</strong> {{ historial.altura }}</li>
+              <li *ngFor="let campo of historial | excluirCampos">
+                <strong>{{ campo[0] }}:</strong> {{ campo[1] }}
+              </li>
+            </ul>
+            <hr />
+          </div>
+    </div>
 </div>
 <div class="contenedor-spinner" *ngIf="spinner">
     <app-spinner id="spinner"></app-spinner>

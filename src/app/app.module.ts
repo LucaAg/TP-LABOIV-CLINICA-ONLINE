@@ -30,6 +30,9 @@ import { EncuestaComponent } from './componentes/encuesta/encuesta.component';
 import { PacientesComponent } from './paginas/pacientes/pacientes.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormHistorialClinicoComponent } from './componentes/form-historial-clinico/form-historial-clinico.component';
+import { ExcluirCamposPipe } from './pipes/excluir-campos.pipe';
+import { FormatoFechaPipe } from './pipes/formato-fecha.pipe';
+import { MayusculaPipe } from './pipes/mayuscula.pipe';
 
 @NgModule({
   declarations: [
@@ -49,7 +52,10 @@ import { FormHistorialClinicoComponent } from './componentes/form-historial-clin
     MisTurnosComponent,
     EncuestaComponent,
     PacientesComponent,
-    FormHistorialClinicoComponent
+    FormHistorialClinicoComponent,
+    ExcluirCamposPipe,
+    FormatoFechaPipe,
+    MayusculaPipe
   ],
   imports: [
     BrowserModule,

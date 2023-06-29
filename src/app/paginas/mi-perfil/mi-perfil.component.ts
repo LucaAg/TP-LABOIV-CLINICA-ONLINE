@@ -4,6 +4,9 @@ import { AuthService } from 'src/app/servicios/auth.service';
 import { FirebaseService } from 'src/app/servicios/firebase.service';
 import { SweetService } from 'src/app/servicios/sweet.service';
 import { bounceIn } from '../animaciones';
+import { jsPDF } from 'jspdf';
+import html2canvas from 'html2canvas';
+
 
 @Component({
   selector: 'app-mi-perfil',
@@ -13,22 +16,33 @@ import { bounceIn } from '../animaciones';
 })
 export class MiPerfilComponent {
   esEspecialista:boolean =false;
+  hayHistorialFiltrado:boolean = true;
+  historial:boolean = false;
+  historialPorPaciente:any = new Array();
   esAdmin:boolean = false;
   esPaciente:boolean = false;
   usuario:any;
   formTiempoConsulta: FormGroup;
   especialidadElegida:string = "";
+  fechaActual: Date = new Date();
   /*Dias*/
   dias = ['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
   /* HORARIOS */
   horas: string[] = [];
   duracionTurno:number = 30; //Valor por default
   disponibilidad:any[]=[];
+  historialesClinicos:any = new Array();
+  historialesClinicosPacienteActual:any = new Array();
+  especialidadElegidaPaciente:string = '';
+  especialidades:any = new Array();
   constructor(private authServ:AuthService, private sweetServ:SweetService,
-    private formBuilder:FormBuilder)
+    private formBuilder:FormBuilder,private fireServ:FirebaseService)
   {
     this.formTiempoConsulta = this.formBuilder.group({
       tiempoConsulta: ['', [Validators.required, Validators.min(20), Validators.max(60)]],
+    });
+    this.fireServ.obtenerEspecialidades().subscribe((especialidades)=>{
+      this.especialidades = especialidades;
     });
   }
   
@@ -68,6 +82,17 @@ export class MiPerfilComponent {
         else                                            
         {
           this.esPaciente = true;
+          this.historialesClinicosPacienteActual=[];
+          this.historialesClinicos = [];
+          this.fireServ.obtenerHistoriasClinicas().subscribe((historiales)=>{
+            for (let i = 0; i < historiales.length; i++) {
+              if(historiales[i].paciente.id == this.usuario.id)
+              {
+                this.historialesClinicosPacienteActual.push(historiales[i]);
+              }
+            }
+            this.historialesClinicos = [...this.historialesClinicosPacienteActual];
+          })
         }
       }
     });
@@ -76,6 +101,11 @@ export class MiPerfilComponent {
   seleccionarEspecialidad(especialidad:string)
   {
     this.especialidadElegida = especialidad;
+  }
+
+  verHistorial()
+  {
+    this.historial = true;
   }
 
   calcularHorariosDinamicos(duracionTurno: number, horaInicio: number, horaFin: number) {
@@ -153,4 +183,63 @@ export class MiPerfilComponent {
     }
     return false;
   }
+
+  crearPDF() {
+    const DATA = document.getElementById('pdf');
+    const doc = new jsPDF('p', 'pt', 'a4');
+    const options = {
+      background: 'white',
+      scale: 3,
+    };
+    //@ts-ignore
+    html2canvas(DATA, options)
+      .then((canvas) => {
+        const img = canvas.toDataURL('image/PNG');
+
+        const bufferX = 30;
+        const bufferY = 30;
+        const imgProps = (doc as any).getImageProperties(img);
+        const pdfWidth = doc.internal.pageSize.getWidth() - 2 * bufferX;
+        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+        doc.addImage(
+          img,
+          'PNG',
+          bufferX,
+          bufferY,
+          pdfWidth,
+          pdfHeight,
+          undefined,
+          'FAST'
+        );
+        return doc;
+      })
+      .then((docResult) => {
+        docResult.save(`historial_clinico.pdf`);
+      });
+  }
+
+  filtrarEspecialidad(especialidad:string)
+  {
+    this.historialesClinicos = [];
+    if(especialidad == 'todos')
+    {
+      this.historialesClinicos = [...this.historialesClinicosPacienteActual];
+    }
+    else
+    {
+      for (let i = 0; i < this.historialesClinicosPacienteActual.length; i++) {
+        if(this.historialesClinicosPacienteActual[i].especialidad == especialidad)
+        {
+          this.historialesClinicos.push(this.historialesClinicosPacienteActual[i]);
+        }
+      }
+    }
+
+    if (this.historialesClinicos.length == 0) {
+      this.hayHistorialFiltrado = false;
+    } else {
+      this.hayHistorialFiltrado = true;
+    }
+  }
 }
+

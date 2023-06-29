@@ -232,6 +232,13 @@ tr:hover{
     height: 100%;
 }
 
+.button-historial
+{
+    background-color: #009aa5;
+    color: white;
+    border: 1px solid white;
+}
+
 .contenedor-spinner
 {
     position: absolute;
@@ -243,4 +250,91 @@ tr:hover{
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 99999;
+}
+
+
+
+.contenedor-historial
+{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(151, 219, 231);
+  align-content: center;
+  text-align: center;
+  border: 0.188rem solid black;
+  border-radius: 0.625rem;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: column;
+  width: 45%;
+  max-height: 80vh;
+  color: rgb(0, 3, 1);
+  backdrop-filter: blur(0.625rem);
+  z-index: 999;
+  overflow-y: scroll;
+}
+
+li strong{
+  text-align: flex-start;
+}
+
+.contenedor-historial .header-historial button
+{
+  background-color: aqua;
+  border: 1px solid black;
+  border-radius: 10px;
+  width: 10vh;
+}
+
+.contenedor-datos
+{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.contenedor-cards
+{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.card
+{
+    width: 30%;
+    height: 50vh;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+    padding: 5px;
+    background-color: #0298cf;
+    border: 1px solid white;
+    border-radius: 10px;
+}
+
+.card img
+{
+    width: 3.75rem;
+    height: 3.75rem;
+    object-fit: cover;
+    border-radius: 0.938rem;
+    border: 0.313rem solid #ced0d2;
+}
+
+.contenedor-cards .card .info-user
+{
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
 }

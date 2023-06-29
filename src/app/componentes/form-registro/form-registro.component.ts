@@ -28,6 +28,7 @@ export class FormRegistroComponent {
   lbEspecialidades:any;
   spinner:boolean = false;
   box:any;
+  captcha: string = '';
   emailPattern: any = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
   constructor(private formBuilder:FormBuilder,private formBuilder2:FormBuilder,
@@ -42,6 +43,7 @@ export class FormRegistroComponent {
       especialidad: ['', [Validators.required]],
       email: ['', [Validators.required,Validators.pattern(this.emailPattern)]],
       clave: ['', [Validators.required,Validators.pattern(this.patternContraseña)]],
+      captcha: ['', [Validators.required]],
       imagen: ['', [Validators.required]],
     });
     this.formAgregarEspecialista = this.formBuilder2.group({
@@ -49,11 +51,25 @@ export class FormRegistroComponent {
       imagenNuevaEspecialidad: ['', [Validators.required]],
     });
     this.activarSpinner();
+    this.captcha = this.crearStringRandom(6);
   }
 
   ngOnInit()
   {
     this.cargarEspecialidades();
+  }
+
+  crearStringRandom(cantidad: number) {
+    const caracteres =
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let retorno = ' ';
+    const length = caracteres.length;
+    for (let i = 0; i < cantidad; i++) {
+      retorno += caracteres.charAt(
+        Math.floor(Math.random() * length)
+      );
+    }
+    return retorno;
   }
 
   activarSpinner()
@@ -86,32 +102,41 @@ export class FormRegistroComponent {
   {
     if(this.formEspecialista.valid)
     {
-      await this.subirImagen(1);
-      if(this.nuevoEspecialista.imagen1 != '')
+      if(
+        this.captcha.toLocaleLowerCase().trim() ==
+        this.formEspecialista.getRawValue().captcha.toLocaleLowerCase().trim())
       {
-        this.agregoImagen = true;
-        this.nuevoEspecialista.nombre = this.formEspecialista.getRawValue().nombre;
-        this.nuevoEspecialista.apellido = this.formEspecialista.getRawValue().apellido;
-        this.nuevoEspecialista.edad = this.formEspecialista.getRawValue().edad;
-        this.nuevoEspecialista.dni = this.formEspecialista.getRawValue().dni;
-        this.nuevoEspecialista.email = this.formEspecialista.getRawValue().email;
-        this.nuevoEspecialista.clave = this.formEspecialista.getRawValue().clave;
-        this.nuevoEspecialista.perfil = "especialista";
-        this.nuevoEspecialista.especialidad = this.obtenerEspecialidadesUsuario();
-        this.nuevaEspecialidad.especialidad = this.formAgregarEspecialista.getRawValue().nuevaEspecialidad;
-        this.nuevoEspecialista.duracionTurno = 30;
-        this.nuevoEspecialista.disponibilidad = []=[];
-        this.auth.registrarEspecialista(this.nuevoEspecialista);
-        this.activarSpinner();
-        setTimeout(()=>{
-          this.formEspecialista.reset();
-          this.nuevoEspecialista = new Especialista();
-        },2000); 
-        this.sweetServ.mensajeExitoso("Especialista registrado exitosamente!","Especialista");
+        await this.subirImagen(1);
+        if(this.nuevoEspecialista.imagen1 != '')
+        {
+          this.agregoImagen = true;
+          this.nuevoEspecialista.nombre = this.formEspecialista.getRawValue().nombre;
+          this.nuevoEspecialista.apellido = this.formEspecialista.getRawValue().apellido;
+          this.nuevoEspecialista.edad = this.formEspecialista.getRawValue().edad;
+          this.nuevoEspecialista.dni = this.formEspecialista.getRawValue().dni;
+          this.nuevoEspecialista.email = this.formEspecialista.getRawValue().email;
+          this.nuevoEspecialista.clave = this.formEspecialista.getRawValue().clave;
+          this.nuevoEspecialista.perfil = "especialista";
+          this.nuevoEspecialista.especialidad = this.obtenerEspecialidadesUsuario();
+          this.nuevaEspecialidad.especialidad = this.formAgregarEspecialista.getRawValue().nuevaEspecialidad;
+          this.nuevoEspecialista.duracionTurno = 30;
+          this.nuevoEspecialista.disponibilidad = []=[];
+          this.auth.registrarEspecialista(this.nuevoEspecialista);
+          this.activarSpinner();
+          setTimeout(()=>{
+            this.formEspecialista.reset();
+            this.nuevoEspecialista = new Especialista();
+          },500); 
+          //this.sweetServ.mensajeExitoso("Especialista registrado exitosamente!","Especialista");
+        }
+        else
+        {
+          console.log("error imagen");
+        }
       }
       else
       {
-        console.log("error imagen");
+        this.sweetServ.mensajeError("Captcha incorrecto, ¿Es usted un robot?","Captcha");
       }
 
     }

@@ -78,8 +78,48 @@
             <div class="contenedor-info-fundamental"> 
                 <h5 for="">EMAIL: {{usuario?.email}}</h5>
                 <h5 for="">PERFIL: {{usuario?.perfil}}</h5>
-                <button *ngIf="esPaciente">Ver historial</button>
+                <button (click)="verHistorial()" *ngIf="esPaciente">Ver historial</button>
             </div>
        </div>
+    </div>
+    <div class="contenedor-historial" *ngIf="historial">
+        <div class="header-historial">
+            <h1>Historia clínica</h1>
+            <div class="botones-pdf">
+                <button (click)="historial = false;">Salir</button>
+                <button (click)="crearPDF()">Imprimir PDF</button>
+            </div>
+        </div >
+        <div>
+            <h2>Especialidades</h2>
+            <button (click)="filtrarEspecialidad('todos')">Todos</button>
+            <button (click)="filtrarEspecialidad(especialidad.especialidad)" *ngFor="let especialidad of especialidades">{{especialidad.especialidad}}</button>
+        </div>
+        <div class="contenedor-pdf" id="pdf">
+            <h4>Historial Clínico</h4>
+            <p>{{fechaActual | formatoFecha}} </p>
+                <img
+              src="../../../assets/logoClinica.png"
+              style="width: 90px"
+              alt="logo"
+            />
+            <h1>Historial clínico de: {{usuario.apellido}}, {{usuario.nombre}}</h1>
+            <h3 *ngIf="!hayHistorialFiltrado">No hubo turnos con esa especialidad</h3>
+            <div class="contenedor-datos" *ngFor="let historial of historialesClinicos">
+              <ul>
+                <li><strong>Fecha:</strong> {{ historial.fechaTurno }}</li>
+                <li><strong>Paciente:</strong> {{ historial.paciente.apellido }}, {{ historial.paciente.nombre }}</li>
+                <li><strong>Especialista:</strong> {{ historial.especialista.apellido }}</li>
+                <li><strong>Peso:</strong> {{ historial.peso }}</li>
+                <li><strong>Temperatura:</strong> {{ historial.temperatura }}</li>
+                <li><strong>Presión:</strong> {{ historial.presion }}</li>
+                <li><strong>Altura:</strong> {{ historial.altura }}</li>
+                <li *ngFor="let campo of historial | excluirCampos">
+                  <strong>{{ campo[0] }}:</strong> {{ campo[1] }}
+                </li>
+              </ul>
+              <hr />
+            </div>
+        </div>
     </div>
 </div>
