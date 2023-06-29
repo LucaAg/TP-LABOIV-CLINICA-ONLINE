@@ -56,7 +56,7 @@ export class MisTurnosComponent {
           {
             if(this.usuario!.perfil == 'especialista')
             {
-              if(turnos[i].especialista.id == this.usuario!.id )
+              if(turnos[i].especialista?.id == this.usuario!.id )
               {
                 console.log("entro");
                 this.listaTurnos.push(turnos[i]);
