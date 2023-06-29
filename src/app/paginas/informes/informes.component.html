@@ -1,0 +1,127 @@
+<div class="pantalla">
+    
+    <div class="contenedor-informes">
+        <div class="informe">
+            <div class="card" (click)="logs = true" 
+            appAgregarBorder colorBorde="red" widthBorde="2px" estiloBorde="dashed">
+                <h4 appResaltarTexto>Logs usuarios</h4>
+                <img src="../../../assets/informes/logs.png" alt="Logs">
+                <h6>Puede ver cuando ingreso el usuario, en que día y a que hora.</h6>
+            </div>
+        </div>
+        <!-- Turnos especialidad -->
+        <div class="informe">
+            <div class="card" (click)="turnosEspecialidad = true" 
+             (click)="generarGraficoBarras()">
+                <h4 appResaltarTexto>Turnos especialidad</h4>
+                <img src="../../../assets/informes/turnos-especialidad.png" alt="Turnos especialidad">
+                <h6>Cantidad de turnos según la especialidad.</h6>
+            </div>
+        </div>
+        <!-- Turnso por día -->
+        <div>
+            <div class="informe" >
+                <div class="card" (click)="turnosPorDias = true" (click)="generarGraficoBarrasDias()" 
+                >
+                    <h4 appResaltarTexto>Turnos por día</h4>
+                    <img src="../../../assets/informes/turnos-dias.png" alt="Turnos especialidad">
+                    <h6>La cantidad de turnos solicitada según el día.</h6>
+                </div>
+            </div>
+        </div>
+        <!-- Turnos solicitados por médico -->
+        <div>
+            <div class="informe">
+                <div class="card" (click)="turnosSolicitadosGrafico = true" (click)="generarGraficoSolicitadosMedico()">
+                    <h4 appResaltarTexto>Turnos solicitados</h4>
+                    <img src="../../../assets/informes/turnos-solicitados.png" alt="Turnos especialidad">
+                    <h6>La cantidad de turnos solicitados por médico durante 6 días.</h6>
+                </div>
+            </div>
+        </div>
+        <!-- Turnos finalizados por médicos -->
+        <div>
+            <div class="informe">
+                <div class="card" (click)="turnosFinalizadosGrafico = true" (click)="generarGraficoFinalizadosMedico()"
+                >
+                    <h4 appResaltarTexto>Turnos finalizados</h4>
+                    <img src="../../../assets/informes/turnos-finalizados.png" alt="Turnos especialidad">
+                    <h6>La cantidad de turnos solicitados por médico durante 6 días.</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="logs" class="tabla-logs" id="pdflogs">
+        <div class="contenedor-tabla">
+            <div class="tabla">
+                <div class="encabezado-tabla">
+                    <img class="logo" src="../../../assets/logoClinica.png" alt="">
+                    <h3>LOGS</h3>
+                    <div class="botonera">
+                        <button appEfectoHover (click)="descargarExcelLogs()">Excel</button>
+                        <button appEfectoHover (click)="descargarPDFLogs()">PDF</button>
+                        <button appEfectoHover (click)="logs = false">Salir</button>
+                    </div>
+                </div>
+                <div class="seccion-tabla">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Hora</th>
+                                <th>Apellido</th>
+                                <th>Nombre</th>
+                                <th>Email</th>
+                                <th>Perfil</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let log of listaLogs">
+                              <td >{{log.fecha}}</td>
+                              <td >{{log.hora}}</td>
+                              <td>{{log.usuario.apellido}}</td>
+                              <td>{{log.usuario.nombre}}</td>
+                              <td>{{log.usuario.email}}</td>
+                              <td>{{log.usuario.perfil}}</td>                  
+                            </tr>                  
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="contenedor-grafico" *ngIf="turnosEspecialidad"
+    id="pdfTurnosPorEspecialidadPorMedico">
+        <div class="botonera">
+            <button (click)="descargarPDFTurnosEspecialidadPorMedico()">PDF</button>
+            <button (click)="turnosEspecialidad = false">Salir</button>
+        </div>
+        <canvas id="barChart"></canvas>
+    </div>
+    <div class="contenedor-grafico" *ngIf="turnosPorDias"
+    id="pdfTurnosPorDiaPorMedico">
+        <div class="botonera">
+            <button (click)="descargarPDFTurnosPorDiaPorMedico()">PDF</button>
+            <button (click)="turnosPorDias = false">Salir</button>
+        </div>
+        <canvas id="barChartDias"></canvas>
+    </div>
+    <div class="contenedor-grafico" *ngIf="turnosSolicitadosGrafico"
+    id="pdfTurnosSolicitadosPorMedico">
+        <div class="botonera">
+            <button (click)="descargarPDFTurnosSolicitadosPorMedico()">PDF</button>
+            <button (click)="turnosSolicitadosGrafico = false">Salir</button>
+        </div>
+        <canvas id="turnosSolicitadosPorMedico"></canvas>
+    </div>
+</div>
+<div class="contenedor-grafico" *ngIf="turnosFinalizadosGrafico" id="pdfTurnosFinalizadosPorMedico">
+    <div class="botonera">
+        <button (click)="descargarPDFTurnosFinalizadosPorMedico()">PDF</button>
+        <button (click)="turnosFinalizadosGrafico = false">Salir</button>
+    </div>
+    <canvas id="barChartFinalizados"></canvas>
+</div>
+<div class="contenedor-spinner" *ngIf="spinner">
+    <app-spinner id="spinner"></app-spinner>
+</div>

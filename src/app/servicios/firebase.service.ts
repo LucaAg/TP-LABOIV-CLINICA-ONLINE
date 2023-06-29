@@ -65,6 +65,12 @@ export class FirebaseService {
     return coleccion.valueChanges();
   }
 
+  obtenerLogs()
+  {
+    const coleccion = this.angularFirestore.collection<any>('logs-ingresos');
+    return coleccion.valueChanges();
+  }
+
   obtenerHistoriasClinicas()
   {
     const coleccion = this.angularFirestore.collection<any>('historiales-clinicos');

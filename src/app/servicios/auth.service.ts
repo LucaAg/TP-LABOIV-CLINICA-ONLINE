@@ -9,6 +9,7 @@ import { of } from 'rxjs';
 import { Usuario } from '../models/usuario';
 import { SweetService } from './sweet.service';
 import * as firebase from 'firebase/compat';
+import { FirebaseService } from './firebase.service';
 
 
 @Injectable({
@@ -18,6 +19,7 @@ export class AuthService {
   estaLogueado = false;
   constructor(  private angularFireAuth: AngularFireAuth,
     private angularFirestore: AngularFirestore,
+    private fireServ:FirebaseService,
     private router: Router,
     private sweetServi:SweetService) { }
 

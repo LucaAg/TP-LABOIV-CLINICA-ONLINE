@@ -138,3 +138,7 @@
 <div class="contenedor-encuesta" *ngIf="historialClinico"  [@entrarIzqADer]>
     <app-form-historial-clinico [paciente]="pacienteSolicitado" [especialista]="turnoEspActualizar.especialista" (historialCompleatado)="onHistorialTerminado($event)"></app-form-historial-clinico>
 </div>
+
+<div class="contenedor-spinner" *ngIf="spinner">
+    <app-spinner id="spinner"></app-spinner>
+</div>

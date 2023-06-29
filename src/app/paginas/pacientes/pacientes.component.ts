@@ -14,6 +14,7 @@ export class PacientesComponent {
   historial:boolean = false;
   especialista:any;
   listaHistoriasCLinicasPorEspecialista:any = new Array();
+  spinner:boolean = false;
   pacientesCount: { [paciente: string]: { count: number; fechas: string[] } } = {};
   constructor(private authServ:AuthService,
     private fireServ:FirebaseService)
@@ -39,6 +40,15 @@ export class PacientesComponent {
         this.filtrarHistoriasClinicas();
       });
     })
+    this.activarSpinner();
+  }
+
+  activarSpinner()
+  {
+    this.spinner = true;
+    setTimeout(()=>{
+      this.spinner = false;
+    },2500)
   }
 
   obtenerConteoPacientes(): void {

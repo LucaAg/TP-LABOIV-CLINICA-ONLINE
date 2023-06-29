@@ -12,6 +12,8 @@
             <li *ngIf="authService.estaLogueado && (usuarioLogueado.perfil == 'especialista' || 
             usuarioLogueado.perfil == 'paciente')"><a routerLink="mis-turnos">Mis turnos</a></li>
             <li *ngIf="authService.estaLogueado && usuarioLogueado.perfil == 'especialista'"><a routerLink="pacientes" >Pacientes</a></li>
+            <li *ngIf="authService.estaLogueado && usuarioLogueado.perfil == 'admin'"><a routerLink="informes" >Informes</a></li>
+
         </ul>
     
         <div class="main" *ngIf="!authService.estaLogueado">

@@ -106,7 +106,7 @@ export class EncuestaComponent {
       encuesta: this.encuestaForm.value,
     };
     console.log(encuesta);
-    this.fireServ.agregarDocumento('encuestas',encuesta)
+    this.fireServ.agregarDocumento('encuestas',encuesta);
     this.encuestaCompletada.emit(false);
   } 
 

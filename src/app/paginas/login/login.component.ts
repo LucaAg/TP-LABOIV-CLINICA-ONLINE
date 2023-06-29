@@ -102,6 +102,7 @@ export class LoginComponent {
                   this.sweetServ.mensajeError(verificacion, "Iniciar sesión");
                 } else {
                   this.auth.setLogueado();
+                  this.crearLog(usuario);
                   this.sweetServ.mensajeExitoso("Inicio de sesión exitoso.", "Iniciar sesión");
                   this.router.navigate(['bienvenida']);
                 }          
@@ -112,6 +113,25 @@ export class LoginComponent {
         this.sweetServ.mensajeError("Error al iniciar sesión", "Iniciar sesión");
       }
     }
+  }
+
+  crearLog(usuarioLog:any)
+  {
+    const fecha = new Date();
+    const horaActual = fecha.getHours().toString().padStart(2, '0') + ':' +
+                     fecha.getMinutes().toString().padStart(2, '0') + ':' +
+                     fecha.getSeconds().toString().padStart(2, '0');
+    const fecha2 = new Date();
+    const dia = fecha2.getDate().toString().padStart(2, '0');
+    const mes = (fecha2.getMonth() + 1).toString().padStart(2, '0');
+    const anio = fecha2.getFullYear().toString();
+    const fechaActual = `${dia}/${mes}/${anio}`;
+    let log:any ={
+      usuario: usuarioLog,
+      fecha: fechaActual,
+      hora: horaActual,
+    }
+    this.firebaseServi.agregarDocumento('logs-ingresos',log);
   }
 
   verificarUsuario(datos:any,usuario:any)

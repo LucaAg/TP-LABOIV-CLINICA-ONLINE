@@ -29,6 +29,7 @@ export class MiPerfilComponent {
   dias = ['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
   /* HORARIOS */
   horas: string[] = [];
+  spinner:boolean = false;
   duracionTurno:number = 30; //Valor por default
   disponibilidad:any[]=[];
   historialesClinicos:any = new Array();
@@ -44,11 +45,20 @@ export class MiPerfilComponent {
     this.fireServ.obtenerEspecialidades().subscribe((especialidades)=>{
       this.especialidades = especialidades;
     });
+    this.activarSpinner();
   }
   
   ngOnInit()
   {
     
+  }
+
+  activarSpinner()
+  {
+    this.spinner=true;
+    setTimeout(()=>{
+      this.spinner = false;
+    },2500);
   }
 
   actualizarDuracion()

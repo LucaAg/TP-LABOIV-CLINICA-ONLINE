@@ -40,7 +40,7 @@ export class MisTurnosComponent {
       accionForm: ['', [Validators.required]],
     })
     
-    //this.activarSpinner();
+    this.activarSpinner();
   }
 
   ngOnInit()
@@ -54,9 +54,9 @@ export class MisTurnosComponent {
         for (let i = 0; i < turnos.length; i++) {
           if(turnos[i].estado != 'disponible')
           {
-            if(this.usuario.perfil == 'especialista')
+            if(this.usuario!.perfil == 'especialista')
             {
-              if(turnos[i].especialista.id == this.usuario.id )
+              if(turnos[i].especialista.id == this.usuario!.id )
               {
                 console.log("entro");
                 this.listaTurnos.push(turnos[i]);

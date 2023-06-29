@@ -91,6 +91,7 @@ export class TurnosComponent {
   {
     console.log(this.turnoARechazar);
     let moldeTurno={
+      id: this.turnoARechazar.id,
       especialidad: this.turnoARechazar.especialidad,
       especialista: this.turnoARechazar.especialista,
       paciente: this.turnoARechazar.paciente,

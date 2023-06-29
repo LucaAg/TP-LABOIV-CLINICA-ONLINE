@@ -33,6 +33,10 @@ import { FormHistorialClinicoComponent } from './componentes/form-historial-clin
 import { ExcluirCamposPipe } from './pipes/excluir-campos.pipe';
 import { FormatoFechaPipe } from './pipes/formato-fecha.pipe';
 import { MayusculaPipe } from './pipes/mayuscula.pipe';
+import { InformesComponent } from './paginas/informes/informes.component';
+import { EfectoHoverDirective } from './directivas/efecto-hover.directive';
+import { AgregarBorderDirective } from './directivas/agregar-border.directive';
+import { ResaltarTextoDirective } from './directivas/resaltar-texto.directive';
 
 @NgModule({
   declarations: [
@@ -55,7 +59,11 @@ import { MayusculaPipe } from './pipes/mayuscula.pipe';
     FormHistorialClinicoComponent,
     ExcluirCamposPipe,
     FormatoFechaPipe,
-    MayusculaPipe
+    MayusculaPipe,
+    InformesComponent,
+    EfectoHoverDirective,
+    AgregarBorderDirective,
+    ResaltarTextoDirective
   ],
   imports: [
     BrowserModule,

@@ -4,7 +4,6 @@ import { FirebaseService } from 'src/app/servicios/firebase.service';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { Especialista } from 'src/app/models/especialista';
 import { AuthService } from 'src/app/servicios/auth.service';
-import { doc } from 'firebase/firestore';
 import { SweetService } from 'src/app/servicios/sweet.service';
 @Component({
   selector: 'app-form-registro',

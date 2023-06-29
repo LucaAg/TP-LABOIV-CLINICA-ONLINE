@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { FirebaseService } from 'src/app/servicios/firebase.service';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { AuthService } from 'src/app/servicios/auth.service';
 import { Paciente } from 'src/app/models/paciente';
@@ -28,7 +27,7 @@ export class FormRegistroPacienteComponent {
   private emailPattern: any = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
   constructor(private formBuilder:FormBuilder,
-    private servicioFire:FirebaseService,private angularFireStorage: AngularFireStorage,
+  private angularFireStorage: AngularFireStorage,
     private auth:AuthService,private sweetServ:SweetService)
   {
     this.formPaciente = this.formBuilder.group({

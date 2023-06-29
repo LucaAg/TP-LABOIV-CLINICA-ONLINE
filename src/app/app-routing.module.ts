@@ -10,6 +10,7 @@ import { MiPerfilComponent } from './paginas/mi-perfil/mi-perfil.component';
 import { MisTurnosComponent } from './paginas/mis-turnos/mis-turnos.component';
 import { PacientesComponent } from './paginas/pacientes/pacientes.component';
 import { FormHistorialClinicoComponent } from './componentes/form-historial-clinico/form-historial-clinico.component';
+import { InformesComponent } from './paginas/informes/informes.component';
 
 const routes: Routes = [
   {path: "", redirectTo: '/bienvenida', pathMatch: 'full'},
@@ -23,6 +24,8 @@ const routes: Routes = [
   {path:'mis-turnos',component:MisTurnosComponent},
   {path:'pacientes',component:PacientesComponent},
   {path:'historial-clinico',component:FormHistorialClinicoComponent},
+  {path:'informes',component:InformesComponent},
+
 ];
 
 @NgModule({
